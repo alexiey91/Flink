@@ -1,0 +1,8 @@
+it/valenti/salome/flink/SocketTextStreamWordCount.class
+it/valenti/salome/flink/SocketTextStreamWordCount$LineSplitter.class
+it/valenti/salome/flink/StreamingJob$1.class
+it/valenti/salome/flink/WordCount$LineSplitter.class
+it/valenti/salome/flink/StreamingJob.class
+it/valenti/salome/flink/StreamingJob$LineSplitter.class
+it/valenti/salome/flink/BatchJob.class
+it/valenti/salome/flink/WordCount.class
