@@ -1,0 +1,779 @@
+2017-06-26 11:32:18,745 WARN  org.apache.hadoop.util.NativeCodeLoader                       - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2017-06-26 11:32:19,053 INFO  org.apache.flink.runtime.jobmanager.JobManager                - --------------------------------------------------------------------------------
+2017-06-26 11:32:19,053 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Starting JobManager (Version: 1.3.0, Rev:760eea8, Date:26.05.2017 @ 14:06:53 UTC)
+2017-06-26 11:32:19,053 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Current user: root
+2017-06-26 11:32:19,053 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  JVM: OpenJDK 64-Bit Server VM - Oracle Corporation - 1.8/25.131-b11
+2017-06-26 11:32:19,053 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Maximum heap size: 1963 MiBytes
+2017-06-26 11:32:19,053 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  JAVA_HOME: (not set)
+2017-06-26 11:32:19,096 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Hadoop version: 2.7.2
+2017-06-26 11:32:19,096 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  JVM Options:
+2017-06-26 11:32:19,096 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Xms2048m
+2017-06-26 11:32:19,096 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Xmx2048m
+2017-06-26 11:32:19,096 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Dlog.file=/home/alessandro/Flink/log/flink-root-jobmanager-0-alessandro-Lenovo-G500.log
+2017-06-26 11:32:19,097 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Dlog4j.configuration=file:/home/alessandro/Flink/conf/log4j.properties
+2017-06-26 11:32:19,097 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     -Dlogback.configurationFile=file:/home/alessandro/Flink/conf/logback.xml
+2017-06-26 11:32:19,097 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Program Arguments:
+2017-06-26 11:32:19,097 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     --configDir
+2017-06-26 11:32:19,097 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     /home/alessandro/Flink/conf
+2017-06-26 11:32:19,097 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     --executionMode
+2017-06-26 11:32:19,097 INFO  org.apache.flink.runtime.jobmanager.JobManager                -     local
+2017-06-26 11:32:19,098 INFO  org.apache.flink.runtime.jobmanager.JobManager                -  Classpath: /home/alessandro/Flink/lib/flink-python_2.10-1.3.0.jar:/home/alessandro/Flink/lib/flink-shaded-hadoop2-uber-1.3.0.jar:/home/alessandro/Flink/lib/log4j-1.2.17.jar:/home/alessandro/Flink/lib/slf4j-log4j12-1.7.7.jar:/home/alessandro/Flink/lib/flink-dist_2.10-1.3.0.jar:::
+2017-06-26 11:32:19,098 INFO  org.apache.flink.runtime.jobmanager.JobManager                - --------------------------------------------------------------------------------
+2017-06-26 11:32:19,104 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Registered UNIX signal handlers for [TERM, HUP, INT]
+2017-06-26 11:32:19,579 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Loading configuration from /home/alessandro/Flink/conf
+2017-06-26 11:32:19,611 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.rpc.address, localhost
+2017-06-26 11:32:19,611 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.rpc.port, 6123
+2017-06-26 11:32:19,611 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.heap.mb, 1024
+2017-06-26 11:32:19,611 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: taskmanager.heap.mb, 1024
+2017-06-26 11:32:19,612 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: taskmanager.numberOfTaskSlots, 1
+2017-06-26 11:32:19,612 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: taskmanager.memory.preallocate, false
+2017-06-26 11:32:19,612 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: parallelism.default, 1
+2017-06-26 11:32:19,612 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.web.port, 8081
+2017-06-26 11:32:19,686 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager without high-availability
+2017-06-26 11:32:19,691 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager on localhost:6123 with execution mode LOCAL
+2017-06-26 11:32:19,770 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.rpc.address, localhost
+2017-06-26 11:32:19,770 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.rpc.port, 6123
+2017-06-26 11:32:19,770 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.heap.mb, 1024
+2017-06-26 11:32:19,770 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: taskmanager.heap.mb, 1024
+2017-06-26 11:32:19,770 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: taskmanager.numberOfTaskSlots, 1
+2017-06-26 11:32:19,771 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: taskmanager.memory.preallocate, false
+2017-06-26 11:32:19,771 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: parallelism.default, 1
+2017-06-26 11:32:19,771 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.web.port, 8081
+2017-06-26 11:32:19,839 INFO  org.apache.flink.runtime.security.modules.HadoopModule        - Hadoop user set to root (auth:SIMPLE)
+2017-06-26 11:32:20,161 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager actor system reachable at localhost:6123
+2017-06-26 11:32:21,861 INFO  akka.event.slf4j.Slf4jLogger                                  - Slf4jLogger started
+2017-06-26 11:32:22,114 INFO  Remoting                                                      - Starting remoting
+2017-06-26 11:32:22,793 INFO  Remoting                                                      - Remoting started; listening on addresses :[akka.tcp://flink@localhost:6123]
+2017-06-26 11:32:22,919 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager web frontend
+2017-06-26 11:32:22,975 INFO  org.apache.flink.runtime.webmonitor.WebMonitorUtils           - Determined location of JobManager log file: /home/alessandro/Flink/log/flink-root-jobmanager-0-alessandro-Lenovo-G500.log
+2017-06-26 11:32:22,976 INFO  org.apache.flink.runtime.webmonitor.WebMonitorUtils           - Determined location of JobManager stdout file: /home/alessandro/Flink/log/flink-root-jobmanager-0-alessandro-Lenovo-G500.out
+2017-06-26 11:32:22,977 INFO  org.apache.flink.runtime.webmonitor.WebRuntimeMonitor         - Using directory /tmp/flink-web-27aa3293-c598-44e2-9323-ae834e693543 for the web interface files
+2017-06-26 11:32:23,044 INFO  org.apache.flink.runtime.webmonitor.WebRuntimeMonitor         - Using directory /tmp/flink-web-b2599cdf-6597-4455-974f-fef667509d2c for web frontend JAR file uploads
+2017-06-26 11:32:28,300 INFO  org.apache.flink.runtime.webmonitor.WebRuntimeMonitor         - Web frontend listening at 0:0:0:0:0:0:0:0:8081
+2017-06-26 11:32:28,313 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager actor
+2017-06-26 11:32:28,414 INFO  org.apache.flink.runtime.blob.BlobServer                      - Created BLOB server storage directory /tmp/blobStore-21a27d54-fb73-465b-85d3-cddb5842e230
+2017-06-26 11:32:28,435 INFO  org.apache.flink.runtime.blob.BlobServer                      - Started BLOB server at 0.0.0.0:33181 - max concurrent requests: 50 - max backlog: 1000
+2017-06-26 11:32:28,500 INFO  org.apache.flink.runtime.metrics.MetricRegistry               - No metrics reporter configured, no metrics will be exposed/reported.
+2017-06-26 11:32:28,534 INFO  org.apache.flink.runtime.jobmanager.MemoryArchivist           - Started memory archivist akka://flink/user/archive
+2017-06-26 11:32:28,536 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting JobManager at akka.tcp://flink@localhost:6123/user/jobmanager.
+2017-06-26 11:32:28,539 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Starting embedded TaskManager for JobManager's LOCAL execution mode
+2017-06-26 11:32:28,734 INFO  org.apache.flink.runtime.io.network.netty.NettyConfig         - NettyConfig [server address: localhost/127.0.0.1, server port: 0, ssl enabled: false, memory segment size (bytes): 32768, transport type: NIO, number of server threads: 1 (manual), number of client threads: 1 (manual), server connect backlog: 0 (use Netty's default), client connect timeout (sec): 120, send/receive buffer size (bytes): 0 (use Netty's default)]
+2017-06-26 11:32:28,740 INFO  org.apache.flink.runtime.taskexecutor.TaskManagerConfiguration  - Messages have a max timeout of 10000 ms
+2017-06-26 11:32:28,754 INFO  org.apache.flink.runtime.taskexecutor.TaskManagerServices     - Temporary file directory '/tmp': total 142 GB, usable 100 GB (70,42% usable)
+2017-06-26 11:32:28,963 INFO  org.apache.flink.runtime.jobmanager.JobManager                - JobManager akka.tcp://flink@localhost:6123/user/jobmanager was granted leadership with leader session ID Some(00000000-0000-0000-0000-000000000000).
+2017-06-26 11:32:28,996 INFO  org.apache.flink.runtime.io.network.buffer.NetworkBufferPool  - Allocated 193 MB for network buffer pool (number of memory segments: 6182, bytes per segment: 32768).
+2017-06-26 11:32:29,802 INFO  org.apache.flink.runtime.io.network.NetworkEnvironment        - Starting the network environment and its components.
+2017-06-26 11:32:29,814 INFO  org.apache.flink.runtime.io.network.netty.NettyClient         - Successful initialization (took 6 ms).
+2017-06-26 11:32:29,826 INFO  org.apache.flink.runtime.io.network.netty.NettyServer         - Successful initialization (took 11 ms). Listening on SocketAddress /127.0.0.1:34007.
+2017-06-26 11:32:31,098 INFO  org.apache.flink.runtime.taskexecutor.TaskManagerServices     - Limiting managed memory to 0.7 of the currently free heap space (1233 MB), memory will be allocated lazily.
+2017-06-26 11:32:37,379 INFO  org.apache.flink.runtime.io.disk.iomanager.IOManager          - I/O manager uses directory /tmp/flink-io-02b4c5de-20b0-4e91-90cc-b97c8117be3e for spill files.
+2017-06-26 11:32:38,285 INFO  org.apache.flink.runtime.metrics.MetricRegistry               - No metrics reporter configured, no metrics will be exposed/reported.
+2017-06-26 11:32:45,976 INFO  org.apache.flink.runtime.filecache.FileCache                  - User file cache uses directory /tmp/flink-dist-cache-6488860c-0948-41fb-8c10-3cb10d999de9
+2017-06-26 11:32:46,811 INFO  org.apache.flink.runtime.webmonitor.WebRuntimeMonitor         - Starting with JobManager akka.tcp://flink@localhost:6123/user/jobmanager on port 8081
+2017-06-26 11:32:46,811 INFO  org.apache.flink.runtime.webmonitor.JobManagerRetriever       - New leader reachable under akka.tcp://flink@localhost:6123/user/jobmanager:00000000-0000-0000-0000-000000000000.
+2017-06-26 11:32:47,266 INFO  org.apache.flink.runtime.clusterframework.standalone.StandaloneResourceManager  - Trying to associate with JobManager leader akka.tcp://flink@localhost:6123/user/jobmanager
+2017-06-26 11:32:47,435 INFO  org.apache.flink.runtime.clusterframework.standalone.StandaloneResourceManager  - Resource Manager associating with leading JobManager Actor[akka://flink/user/jobmanager#-522250506] - leader session 00000000-0000-0000-0000-000000000000
+2017-06-26 11:32:47,624 INFO  org.apache.flink.runtime.filecache.FileCache                  - User file cache uses directory /tmp/flink-dist-cache-cf4c3d37-e4b4-40c3-b955-7570d4103119
+2017-06-26 11:32:48,016 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Starting TaskManager actor at akka://flink/user/taskmanager#1670262731.
+2017-06-26 11:32:48,017 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - TaskManager data connection information: 8afb3f53bdc6bf68fd6cf8d53c0f2b80 @ localhost (dataPort=34007)
+2017-06-26 11:32:48,018 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - TaskManager has 1 task slot(s).
+2017-06-26 11:32:48,064 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Memory usage stats: [HEAP: 268/1963/1963 MB, NON HEAP: 37/38/-1 MB (used/committed/max)]
+2017-06-26 11:32:48,090 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Trying to register at JobManager akka.tcp://flink@localhost:6123/user/jobmanager (attempt 1, timeout: 500 milliseconds)
+2017-06-26 11:32:48,092 INFO  org.apache.flink.runtime.clusterframework.standalone.StandaloneResourceManager  - TaskManager 8afb3f53bdc6bf68fd6cf8d53c0f2b80 has started.
+2017-06-26 11:32:48,168 INFO  org.apache.flink.runtime.instance.InstanceManager             - Registered TaskManager at localhost (akka://flink/user/taskmanager) as 9c791f1ce931a6abdfff9e448c07fd5b. Current number of registered hosts is 1. Current number of alive task slots is 1.
+2017-06-26 11:32:48,198 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Successful registration at JobManager (akka://flink/user/jobmanager), starting network stack and library cache.
+2017-06-26 11:32:48,202 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Determined BLOB server address to be localhost/127.0.0.1:33181. Starting BLOB cache.
+2017-06-26 11:32:48,223 INFO  org.apache.flink.runtime.blob.BlobCache                       - Created BLOB cache storage directory /tmp/blobStore-eaa60425-d004-4d76-bd63-5fbe64c2ac9b
+2017-06-26 13:39:39,730 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Submitting job ba69909e1c463fe733662046025ba8cb (Flink Streaming Java API Skeleton).
+2017-06-26 13:39:40,063 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Using restart strategy NoRestartStrategy for ba69909e1c463fe733662046025ba8cb.
+2017-06-26 13:39:40,671 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Job recovers via failover strategy: full graph restart
+2017-06-26 13:39:41,006 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Running initialization on master for job Flink Streaming Java API Skeleton (ba69909e1c463fe733662046025ba8cb).
+2017-06-26 13:39:41,006 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Successfully ran initialization on master in 0 ms.
+2017-06-26 13:39:41,430 INFO  org.apache.flink.runtime.jobmanager.JobManager                - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:41,715 INFO  org.apache.flink.runtime.jobmanager.JobManager                - Scheduling job ba69909e1c463fe733662046025ba8cb (Flink Streaming Java API Skeleton).
+2017-06-26 13:39:41,716 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Job Flink Streaming Java API Skeleton (ba69909e1c463fe733662046025ba8cb) switched from state CREATED to RUNNING.
+2017-06-26 13:39:41,739 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,959 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,960 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,960 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,960 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,961 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,961 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,962 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,962 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,963 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,964 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,964 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,964 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,965 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,965 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,965 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,966 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,966 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,967 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:41,967 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) switched from CREATED to SCHEDULED.
+2017-06-26 13:39:42,098 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,124 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,400 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,400 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,441 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,442 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,444 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,444 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,446 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,446 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,447 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,459 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,460 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,461 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,463 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,464 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,506 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,506 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,507 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,507 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Source: Custom File Source (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,509 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,510 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,590 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,591 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,592 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,593 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,595 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,595 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,596 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,597 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,599 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,600 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,601 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,601 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,602 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,602 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,603 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,604 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:42,605 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) switched from SCHEDULED to DEPLOYING.
+2017-06-26 13:39:42,606 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Deploying Split Reader: Custom File Source -> Sink: Unnamed (1/1) (attempt #0) to localhost
+2017-06-26 13:39:43,236 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,255 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,255 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,265 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) [DEPLOYING]
+2017-06-26 13:39:43,268 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,270 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,273 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,336 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,410 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) [DEPLOYING]
+2017-06-26 13:39:43,336 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,440 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,440 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) [DEPLOYING]
+2017-06-26 13:39:43,441 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) [DEPLOYING]
+2017-06-26 13:39:43,440 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,442 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) [DEPLOYING]
+2017-06-26 13:39:43,443 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,444 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,488 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) [DEPLOYING]
+2017-06-26 13:39:43,509 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,514 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,539 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,616 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) [DEPLOYING]
+2017-06-26 13:39:43,539 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,677 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) [DEPLOYING]
+2017-06-26 13:39:43,641 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,641 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) [DEPLOYING].
+2017-06-26 13:39:43,641 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) [DEPLOYING].
+2017-06-26 13:39:43,641 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) [DEPLOYING].
+2017-06-26 13:39:43,641 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) [DEPLOYING].
+2017-06-26 13:39:43,641 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) [DEPLOYING].
+2017-06-26 13:39:43,641 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) [DEPLOYING].
+2017-06-26 13:39:43,641 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) [DEPLOYING].
+2017-06-26 13:39:43,677 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) [DEPLOYING].
+2017-06-26 13:39:43,712 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Source: Custom File Source (1/1)
+2017-06-26 13:39:43,756 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,813 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:43,814 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) [DEPLOYING]
+2017-06-26 13:39:43,814 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) [DEPLOYING]
+2017-06-26 13:39:43,815 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) [DEPLOYING].
+2017-06-26 13:39:43,815 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) [DEPLOYING].
+2017-06-26 13:39:44,051 INFO  org.apache.flink.runtime.blob.BlobCache                       - Downloading da6f0aedbbefa6a912e78aecd25c6f913ed0ba4e from localhost/127.0.0.1:33181
+2017-06-26 13:39:44,077 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,098 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,128 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) [DEPLOYING]
+2017-06-26 13:39:44,128 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) [DEPLOYING].
+2017-06-26 13:39:44,131 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,134 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,136 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,137 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,140 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,142 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,146 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,148 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,150 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Received task Split Reader: Custom File Source -> Sink: Unnamed (1/1)
+2017-06-26 13:39:44,293 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,306 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,320 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) [DEPLOYING]
+2017-06-26 13:39:44,320 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) [DEPLOYING].
+2017-06-26 13:39:44,320 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,321 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) [DEPLOYING]
+2017-06-26 13:39:44,321 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) [DEPLOYING].
+2017-06-26 13:39:44,293 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,322 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) [DEPLOYING]
+2017-06-26 13:39:44,322 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) [DEPLOYING].
+2017-06-26 13:39:44,293 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,293 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,322 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) [DEPLOYING]
+2017-06-26 13:39:44,293 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,323 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) [DEPLOYING].
+2017-06-26 13:39:44,293 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,306 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) switched from CREATED to DEPLOYING.
+2017-06-26 13:39:44,306 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) [DEPLOYING]
+2017-06-26 13:39:44,323 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) [DEPLOYING]
+2017-06-26 13:39:44,323 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) [DEPLOYING]
+2017-06-26 13:39:44,324 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) [DEPLOYING].
+2017-06-26 13:39:44,323 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) [DEPLOYING]
+2017-06-26 13:39:44,323 INFO  org.apache.flink.runtime.taskmanager.Task                     - Creating FileSystem stream leak safety net for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) [DEPLOYING]
+2017-06-26 13:39:44,324 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) [DEPLOYING].
+2017-06-26 13:39:44,324 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) [DEPLOYING].
+2017-06-26 13:39:44,324 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) [DEPLOYING].
+2017-06-26 13:39:44,324 INFO  org.apache.flink.runtime.taskmanager.Task                     - Loading JAR files for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) [DEPLOYING].
+2017-06-26 13:39:44,776 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) [DEPLOYING].
+2017-06-26 13:39:44,981 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) [DEPLOYING].
+2017-06-26 13:39:44,997 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) [DEPLOYING].
+2017-06-26 13:39:45,022 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) [DEPLOYING].
+2017-06-26 13:39:45,045 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) [DEPLOYING].
+2017-06-26 13:39:45,092 INFO  org.apache.flink.runtime.taskmanager.Task                     - Registering task at network: Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) [DEPLOYING].
+2017-06-26 13:39:45,271 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,283 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,272 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,272 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,272 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,272 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,285 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,285 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,338 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,341 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,342 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,343 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,343 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,345 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,345 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,387 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,396 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,397 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,397 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,428 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,429 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,431 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,431 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,432 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,431 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,552 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,553 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,554 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,554 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,434 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,433 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,433 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,433 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,433 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,432 INFO  org.apache.flink.streaming.runtime.tasks.StreamTask           - No state backend has been configured, using default state backend (Memory / JobManager)
+2017-06-26 13:39:45,432 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,431 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,549 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,565 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,564 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,565 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,565 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:45,565 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) switched from DEPLOYING to RUNNING.
+2017-06-26 13:39:46,014 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.rpc.address, localhost
+2017-06-26 13:39:46,014 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.rpc.port, 6123
+2017-06-26 13:39:46,015 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.heap.mb, 1024
+2017-06-26 13:39:46,015 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: taskmanager.heap.mb, 1024
+2017-06-26 13:39:46,015 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: taskmanager.numberOfTaskSlots, 1
+2017-06-26 13:39:46,015 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: taskmanager.memory.preallocate, false
+2017-06-26 13:39:46,015 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: parallelism.default, 1
+2017-06-26 13:39:46,015 INFO  org.apache.flink.configuration.GlobalConfiguration            - Loading configuration property: jobmanager.web.port, 8081
+2017-06-26 13:39:47,917 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:48,159 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:48,159 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:48,160 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:48,160 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:48,160 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:47,917 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:48,291 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:48,291 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:48,315 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction  - No state to restore for the ContinuousFileMonitoringFunction.
+2017-06-26 13:39:51,502 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,503 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,503 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,503 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,503 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,503 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,503 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,503 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,503 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,503 ERROR org.apache.flink.streaming.runtime.tasks.StreamTask           - Error during disposal of stream operator.
+java.lang.NullPointerException
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.close(ContinuousFileMonitoringFunction.java:337)
+	at org.apache.flink.api.common.functions.util.FunctionUtils.closeFunction(FunctionUtils.java:43)
+	at org.apache.flink.streaming.api.operators.AbstractUdfStreamOperator.dispose(AbstractUdfStreamOperator.java:126)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.disposeAllOperators(StreamTask.java:428)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:333)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,797 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:51,921 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629368065231435,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,797 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:51,797 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:51,602 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629362950259427,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,594 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629383410148822,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,578 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 69,10632024809835772,27679,-221,1011,553570,2481132,-9441,2048,2580,-8913,1107,4396 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,560 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629342490369879,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,560 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629378295176356,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,559 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629357835286658,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,558 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629347605342274,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,558 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629373180203890,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,545 INFO  org.apache.flink.runtime.taskmanager.Task                     - Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629352720314738,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:51,922 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:51,922 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:51,921 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:51,921 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:51,921 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:51,921 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:51,921 INFO  org.apache.flink.streaming.api.functions.source.ContinuousFileReaderOperator  - No state to restore for the ContinuousFileReaderOperator (taskIdx=0).
+2017-06-26 13:39:52,122 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c).
+2017-06-26 13:39:52,122 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237).
+2017-06-26 13:39:52,122 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95).
+2017-06-26 13:39:52,123 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c).
+2017-06-26 13:39:52,124 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148).
+2017-06-26 13:39:52,124 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a).
+2017-06-26 13:39:52,124 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c).
+2017-06-26 13:39:52,125 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b).
+2017-06-26 13:39:52,125 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068).
+2017-06-26 13:39:52,182 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755).
+2017-06-26 13:39:53,923 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) [FAILED]
+2017-06-26 13:39:53,923 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) [FAILED]
+2017-06-26 13:39:53,923 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) [FAILED]
+2017-06-26 13:39:53,924 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) [FAILED]
+2017-06-26 13:39:53,923 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) [FAILED]
+2017-06-26 13:39:53,926 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) [FAILED]
+2017-06-26 13:39:53,926 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) [FAILED]
+2017-06-26 13:39:53,927 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) [FAILED]
+2017-06-26 13:39:53,927 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) [FAILED]
+2017-06-26 13:39:53,927 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) [FAILED]
+2017-06-26 13:39:54,397 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (19f4d5e678d435f040099f90b209c21c)
+2017-06-26 13:39:54,399 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (edcbb69807a3c01e9c03f474de00e755)
+2017-06-26 13:39:54,400 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (f2d50d2e1863a4c63d290d53de657a6b)
+2017-06-26 13:39:54,401 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (d43a4bab5250a58a197cfa9160ead237)
+2017-06-26 13:39:54,402 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (90dc2e971949c7ae8cd016338757845a)
+2017-06-26 13:39:54,403 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (a47cc80c88f092ae5ea45c961bf19068)
+2017-06-26 13:39:54,404 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (1a7f4602e3cec5d6d9289b5dbe91895c)
+2017-06-26 13:39:54,448 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (624fc102ca556007bf9a1b90ab59d48c)
+2017-06-26 13:39:54,450 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (43890deaa6f5b2fdeba823a8b0f84a95)
+2017-06-26 13:39:54,558 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state FAILED to JobManager for task Source: Custom File Source (ab31d2be60e79472cdc6319ba0279148)
+2017-06-26 13:39:54,561 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (f2d50d2e1863a4c63d290d53de657a6b) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629378295176356,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,606 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (d43a4bab5250a58a197cfa9160ead237) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629347605342274,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,606 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (a47cc80c88f092ae5ea45c961bf19068) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629352720314738,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,606 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (90dc2e971949c7ae8cd016338757845a) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629373180203890,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,605 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (edcbb69807a3c01e9c03f474de00e755) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629383410148822,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,561 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (19f4d5e678d435f040099f90b209c21c) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 69,10632024809835772,27679,-221,1011,553570,2481132,-9441,2048,2580,-8913,1107,4396 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,607 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (ab31d2be60e79472cdc6319ba0279148) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629362950259427,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,607 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (43890deaa6f5b2fdeba823a8b0f84a95) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629342490369879,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,606 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (624fc102ca556007bf9a1b90ab59d48c) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629357835286658,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,606 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Source: Custom File Source (1/1) (1a7f4602e3cec5d6d9289b5dbe91895c) switched from RUNNING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629368065231435,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,606 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Job Flink Streaming Java API Skeleton (ba69909e1c463fe733662046025ba8cb) switched from state RUNNING to FAILING.
+java.io.FileNotFoundException: The provided file path 98,10629378295176356,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:39:54,617 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) switched from RUNNING to CANCELING.
+2017-06-26 13:39:54,618 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution 1a7f4602e3cec5d6d9289b5dbe91895c
+2017-06-26 13:39:54,618 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution 43890deaa6f5b2fdeba823a8b0f84a95
+2017-06-26 13:39:54,636 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution 90dc2e971949c7ae8cd016338757845a
+2017-06-26 13:39:54,637 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution d43a4bab5250a58a197cfa9160ead237
+2017-06-26 13:39:54,637 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution f2d50d2e1863a4c63d290d53de657a6b
+2017-06-26 13:39:54,637 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution a47cc80c88f092ae5ea45c961bf19068
+2017-06-26 13:39:54,637 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution edcbb69807a3c01e9c03f474de00e755
+2017-06-26 13:39:54,637 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution 624fc102ca556007bf9a1b90ab59d48c
+2017-06-26 13:39:54,637 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution 19f4d5e678d435f040099f90b209c21c
+2017-06-26 13:39:54,637 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Discarding the results produced by task execution ab31d2be60e79472cdc6319ba0279148
+2017-06-26 13:39:54,946 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e).
+2017-06-26 13:39:54,946 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) switched from RUNNING to CANCELING.
+2017-06-26 13:39:54,947 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e).
+2017-06-26 13:39:55,173 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,173 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,173 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,174 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,174 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,174 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,174 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,175 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,175 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,267 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05).
+2017-06-26 13:39:55,267 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,269 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05).
+2017-06-26 13:39:55,276 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49).
+2017-06-26 13:39:55,276 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,277 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49).
+2017-06-26 13:39:55,278 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80).
+2017-06-26 13:39:55,278 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,279 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80).
+2017-06-26 13:39:55,280 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81).
+2017-06-26 13:39:55,280 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,281 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81).
+2017-06-26 13:39:55,282 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596).
+2017-06-26 13:39:55,282 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,283 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596).
+2017-06-26 13:39:55,284 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70).
+2017-06-26 13:39:55,284 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,284 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70).
+2017-06-26 13:39:55,286 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b).
+2017-06-26 13:39:55,286 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,286 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b).
+2017-06-26 13:39:55,287 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2).
+2017-06-26 13:39:55,288 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,288 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2).
+2017-06-26 13:39:55,515 INFO  org.apache.flink.runtime.taskmanager.Task                     - Attempting to cancel task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494).
+2017-06-26 13:39:55,515 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) switched from RUNNING to CANCELING.
+2017-06-26 13:39:55,547 INFO  org.apache.flink.runtime.taskmanager.Task                     - Triggering cancellation of task code Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494).
+2017-06-26 13:40:00,748 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,748 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b).
+2017-06-26 13:40:00,749 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) [CANCELED]
+2017-06-26 13:40:00,749 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (c436e88488965432e5e17482f6a44f5b)
+2017-06-26 13:40:00,784 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,784 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49).
+2017-06-26 13:40:00,784 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,784 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,784 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81).
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2).
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) [CANCELED]
+2017-06-26 13:40:00,786 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (c436e88488965432e5e17482f6a44f5b) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,788 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) [CANCELED]
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,789 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05).
+2017-06-26 13:40:00,789 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) [CANCELED]
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) [CANCELED]
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,790 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596).
+2017-06-26 13:40:00,790 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) [CANCELED]
+2017-06-26 13:40:00,784 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80).
+2017-06-26 13:40:00,790 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e).
+2017-06-26 13:40:00,789 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494).
+2017-06-26 13:40:00,791 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) [CANCELED]
+2017-06-26 13:40:00,791 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) [CANCELED]
+2017-06-26 13:40:00,788 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (0f091ed2aa2a67e7d99159f175fafc81)
+2017-06-26 13:40:00,791 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (e4632a30e9237b3a9f7092da989112b2)
+2017-06-26 13:40:00,792 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (69b9fc69b022abbb2893d2e10c8fcd05)
+2017-06-26 13:40:00,792 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (2386a0bdc778e42c61a373c6ea8b7e49)
+2017-06-26 13:40:00,792 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (75bfb1b33515203b28c9d2dd2a5be596)
+2017-06-26 13:40:00,792 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (9fb507adfe63280cf7d7510ea704ac80)
+2017-06-26 13:40:00,792 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (168f8393ca52bb6e9300f43f4c6d5494)
+2017-06-26 13:40:00,793 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (e4632a30e9237b3a9f7092da989112b2) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,793 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (69b9fc69b022abbb2893d2e10c8fcd05) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,794 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (2386a0bdc778e42c61a373c6ea8b7e49) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,794 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (75bfb1b33515203b28c9d2dd2a5be596) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,794 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (9fb507adfe63280cf7d7510ea704ac80) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,785 INFO  org.apache.flink.runtime.taskmanager.Task                     - Freeing task resources for Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70).
+2017-06-26 13:40:00,794 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (168f8393ca52bb6e9300f43f4c6d5494) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,793 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (0f091ed2aa2a67e7d99159f175fafc81) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,791 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) [CANCELED]
+2017-06-26 13:40:00,798 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (394344a21892c98a328b8d58ece6f19e)
+2017-06-26 13:40:00,808 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (394344a21892c98a328b8d58ece6f19e) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,810 INFO  org.apache.flink.runtime.taskmanager.Task                     - Ensuring all FileSystem streams are closed for task Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) [CANCELED]
+2017-06-26 13:40:00,815 INFO  org.apache.flink.runtime.taskmanager.TaskManager              - Un-registering task and sending final execution state CANCELED to JobManager for task Split Reader: Custom File Source -> Sink: Unnamed (622ab26977659f4bc97f88bee4879d70)
+2017-06-26 13:40:00,816 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Split Reader: Custom File Source -> Sink: Unnamed (1/1) (622ab26977659f4bc97f88bee4879d70) switched from CANCELING to CANCELED.
+2017-06-26 13:40:00,817 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Try to restart or fail the job Flink Streaming Java API Skeleton (ba69909e1c463fe733662046025ba8cb) if no longer possible.
+2017-06-26 13:40:00,817 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Job Flink Streaming Java API Skeleton (ba69909e1c463fe733662046025ba8cb) switched from state FAILING to FAILED.
+java.io.FileNotFoundException: The provided file path 98,10629378295176356,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:40:00,818 INFO  org.apache.flink.runtime.executiongraph.ExecutionGraph        - Could not restart the job Flink Streaming Java API Skeleton (ba69909e1c463fe733662046025ba8cb) because the restart strategy prevented it.
+java.io.FileNotFoundException: The provided file path 98,10629378295176356,26406,-6869,1070,1166235,7161971,-5706,3485,-7435,-2410,-8454,-4765 does not exist.
+	at org.apache.flink.streaming.api.functions.source.ContinuousFileMonitoringFunction.run(ContinuousFileMonitoringFunction.java:192)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:87)
+	at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:55)
+	at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.run(SourceStreamTask.java:95)
+	at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:262)
+	at org.apache.flink.runtime.taskmanager.Task.run(Task.java:702)
+	at java.lang.Thread.run(Thread.java:748)
+2017-06-26 13:40:00,818 INFO  org.apache.flink.runtime.checkpoint.CheckpointCoordinator     - Stopping checkpoint coordinator for job ba69909e1c463fe733662046025ba8cb
+2017-06-26 13:40:00,818 INFO  org.apache.flink.runtime.checkpoint.StandaloneCompletedCheckpointStore  - Shutting down
+2017-06-26 13:43:40,621 INFO  org.apache.flink.runtime.jobmanager.JobManager                - RECEIVED SIGNAL 15: SIGTERM. Shutting down as requested.
+2017-06-26 13:43:40,693 INFO  org.apache.flink.runtime.webmonitor.WebRuntimeMonitor         - Removing web dashboard root cache directory /tmp/flink-web-27aa3293-c598-44e2-9323-ae834e693543
+2017-06-26 13:43:40,696 INFO  org.apache.flink.runtime.blob.BlobCache                       - Shutting down BlobCache
+2017-06-26 13:43:40,731 INFO  org.apache.flink.runtime.blob.BlobServer                      - Stopped BLOB server at 0.0.0.0:33181
+2017-06-26 13:43:41,059 INFO  org.apache.flink.runtime.webmonitor.WebRuntimeMonitor         - Removing web dashboard jar upload directory /tmp/flink-web-b2599cdf-6597-4455-974f-fef667509d2c
+2017-06-26 13:43:41,137 INFO  org.apache.flink.runtime.io.disk.iomanager.IOManager          - I/O manager removed spill file directory /tmp/flink-io-02b4c5de-20b0-4e91-90cc-b97c8117be3e
