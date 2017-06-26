@@ -1,4 +1,4 @@
-package it.valenti.salome.flink;
+package main.java.it.valenti.salome.flink;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more

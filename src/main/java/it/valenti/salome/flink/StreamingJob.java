@@ -1,10 +1,11 @@
-package it.valenti.salome.flink;
+package main.java.it.valenti.salome.flink;
 
 import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.functions.ReduceFunction;
 
+import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.streaming.api.datastream.DataStream;
 
@@ -65,15 +66,16 @@ public class StreamingJob {
 		@Override
 		public void flatMap(String value, Collector<Tuple3<String, Integer, Integer>> out) {
 			// normalize and split the line
-			String[] tokens = value.toLowerCase().split(" ");
+			String[] tokens = value.toLowerCase().split(",");
 
 			// emit the pairs
 			//key,conteggio,vel
-			out.collect(new Tuple3<String, Integer, Integer>(tokens[0], 1,Integer.parseInt(tokens[1])));			
+			out.collect(new Tuple3<String, Integer, Integer>(tokens[0], 1,Integer.parseInt(tokens[1])));
 			
 		}
 	}
-	
+
+
 	public static void main(String[] args) throws Exception {
 		// set up the streaming execution environment
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -81,14 +83,19 @@ public class StreamingJob {
 		String inputFile = args[0];
 		String outputFile = args[1];
 		DataStream<String> test = env.readTextFile(inputFile);
-		
-		DataStream<Tuple3<String,Integer,Integer>> ex=test.flatMap(new LineSplitter())	
+
+
+
+
+
+		DataStream<Tuple3<String,Integer,Integer>> ex=test.flatMap(new LineSplitter())
 				.keyBy(0)
 				//.window(TumblingEventTimeWindows.of(Time.seconds(3)))
 				.reduce(new ReduceFunction<Tuple3<String, Integer, Integer>>() {
 				    /**
-					 * 
+					*
 					 */
+
 					private static final long serialVersionUID = 7448326084914869599L;
 
 					@Override
@@ -97,6 +104,7 @@ public class StreamingJob {
 						int media = 0;
 						if(value2!=null)
 							media = value1.f2+(value2.f2-value1.f2)/(value1.f1+1);
+						//f0=key f1=conteggio, f2=velocità
 				        return new Tuple3<String, Integer, Integer>(value1.f0,value1.f1+1,media);
 				    }
 				}).keyBy(0).maxBy(1);
