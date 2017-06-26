@@ -1,9 +1,0 @@
-/home/alessandro/Scrivania/Flink/src/main/java/it/valenti/salome/flink/BatchJob.java
-/home/alessandro/Scrivania/Flink/src/main/java/it/valenti/salome/flink/StreamingJob.java
-/home/alessandro/Scrivania/Flink/src/main/java/it/valenti/salome/flink/util/Query1Object.java
-/home/alessandro/Scrivania/Flink/src/main/java/it/valenti/salome/flink/util/rabbitMqTest.java
-/home/alessandro/Scrivania/Flink/src/main/java/it/valenti/salome/flink/util/rabbitMqReader.java
-/home/alessandro/Scrivania/Flink/src/main/java/it/valenti/salome/flink/WordCount.java
-/home/alessandro/Scrivania/Flink/src/main/java/it/valenti/salome/flink/StreamingJobRabbit.java
-/home/alessandro/Scrivania/Flink/src/main/java/it/valenti/salome/flink/SocketTextStreamWordCount.java
-/home/alessandro/Scrivania/Flink/src/main/java/it/valenti/salome/flink/StreamingJobAle.java
