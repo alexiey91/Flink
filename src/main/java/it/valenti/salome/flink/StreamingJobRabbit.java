@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class StreamingJobRabbit {
     private final static String QUEUE_NAME = "PIO";
-    private final long Start_match = 10753295594424116L;
+    private  static final long Start_match = 10753295594424116L;
     private static final long Starting = 10629342490369879L;
 
     public static void main(String[] args) throws Exception {
@@ -51,25 +51,31 @@ public class StreamingJobRabbit {
 
             while ((sCurrentLine = br.readLine()) != null) {
                 System.out.println(sCurrentLine);
-                String[] parts=sCurrentLine.split(",");
+                String[] parts = sCurrentLine.split(",");
 
-                parts[1] = ""+((Long.parseLong(parts[1])-Starting));
-                parts[1] = ""+(Math.round(Long.parseLong(parts[1])/1000000000));
+                parts[1] = "" + ((Long.parseLong(parts[1]) - Starting));
+                parts[1] = "" + (Math.round(Long.parseLong(parts[1]) / 1000000000));
+                parts[2] = ""+((Double.parseDouble(parts[2]) / 1000));
+                parts[3] = ""+((Double.parseDouble(parts[3]) / 1000));
+                parts[4] = ""+((Double.parseDouble(parts[4]) / 1000));
+                parts[5] = ""+((Double.parseDouble(parts[5]) / 1000000));
 
-                // parts[1] = ""+(Double.parseDouble(parts[1])/1000);
-                String line= parts[0];
-                for (int  i=0; i<parts.length-2;i++){
-                    line+=","+parts[i+1];
+                if (Long.parseLong(parts[1]) < 0) {
+                    System.out.println("long continue = " + Long.parseLong(parts[1]));
+                    continue;
                 }
-                channel.basicPublish("", QUEUE_NAME, null, line.getBytes("UTF-8"));
-                System.out.println(" [x] Sent '" + line + "'");
+                else {
+                    String line = parts[0];
+                    for (int i = 0; i < parts.length - 2 ; i++) {
+                        line += "," + parts[i + 1];
+                    }
+                    channel.basicPublish("", QUEUE_NAME, null, line.getBytes("UTF-8"));
+                    System.out.println(" [x] Sent '" + line + "'");
 
-                //Eseguere Lettura & Query1
-
-
+                    //Eseguere Lettura & Query1
+                }
 
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
