@@ -3,17 +3,7 @@ package main.java.it.valenti.salome.flink;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import io.netty.channel.socket.oio.DefaultOioServerSocketChannelConfig;
-import org.apache.flink.api.common.functions.FlatMapFunction;
-import org.apache.flink.api.common.functions.ReduceFunction;
-import org.apache.flink.api.java.tuple.Tuple3;
-import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.connectors.rabbitmq.RMQSink;
-import org.apache.flink.streaming.connectors.rabbitmq.RMQSource;
-import org.apache.flink.streaming.connectors.rabbitmq.common.RMQConnectionConfig;
-import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
-import org.apache.flink.util.Collector;
+
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -53,14 +43,15 @@ public class StreamingJobRabbit {
                 System.out.println(sCurrentLine);
                 String[] parts = sCurrentLine.split(",");
 
-                parts[1] = "" + ((Long.parseLong(parts[1]) - Starting));
+                parts[1] = "" + ((Long.parseLong(parts[1]) - Start_match));
                 parts[1] = "" + (Math.round(Long.parseLong(parts[1]) / 1000000000));
                 parts[2] = ""+((Double.parseDouble(parts[2]) / 1000));
                 parts[3] = ""+((Double.parseDouble(parts[3]) / 1000));
                 parts[4] = ""+((Double.parseDouble(parts[4]) / 1000));
                 parts[5] = ""+((Double.parseDouble(parts[5]) / 1000000));
-
-                if (Long.parseLong(parts[1]) < 0) {
+                String s = "-"+parts[0]+"-";
+                String test = "-4-8-10-12-97-98-99-100-105-106-";
+                if (Long.parseLong(parts[1]) < 0 || test.contains(s)) {
                     System.out.println("long continue = " + Long.parseLong(parts[1]));
                     continue;
                 }
