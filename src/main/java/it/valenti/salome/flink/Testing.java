@@ -50,7 +50,7 @@ public class Testing {
         // set up the streaming execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-
+        env.setParallelism(2);
         org.apache.flink.streaming.api.windowing.time.Time window1 = org.apache.flink.streaming.api.windowing.time.Time.seconds(2);
 
         final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
@@ -84,7 +84,8 @@ public class Testing {
                                 return element.f2;
                             }
                         }).keyBy(0)
-                        .timeWindow(Time.milliseconds(500))
+                        .timeWindow(Time.minutes(1))
+
                         .reduce(new ReduceFunction<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
 
@@ -95,13 +96,16 @@ public class Testing {
                                     throws Exception {
                                 double media = 0;
                                 double distance = 0;
+                                long time = value1.f2;
                                 if (value2 != null) {
                                     media = value1.f6 + (value2.f6 - value1.f6) / (value1.f1 + 1);
-
-                                    distance = value1.f5 + Math.sqrt(Math.pow(value2.f3 - value1.f3, 2) + Math.pow(value2.f4 - value1.f4, 2));
+                                    distance = value1.f5 + (value2.f6/200);
+                                    //distance = value1.f5 + Math.sqrt(Math.pow(value2.f3 - value1.f3, 2) + Math.pow(value2.f4 - value1.f4, 2));
+                                    time = value2.f2;
                                 }
+                                else distance = (value1.f6/200);
                                 // System.out.println("media"+media+" distance= "+distance+" m"+" difference x ="+(value2.f3-value1.f3)+" difference y ="+(value2.f4-value1.f4));
-                                return new Tuple7<String, Integer, Long, Double, Double, Double, Double>(value1.f0, value1.f1 + 1, value1.f2, value1.f3, value1.f4, distance, media);
+                                return new Tuple7<String, Integer, Long, Double, Double, Double, Double>(value1.f0, value1.f1 + 1, time, value1.f3, value1.f4, distance, media);
                             }
                         }).keyBy(0).flatMap(new DuplicateFilter());
                        /*
@@ -149,14 +153,14 @@ public class Testing {
         })*/;
 
 
-       // ex.writeAsText(args[0]);
-        ex.print();
+        ex.writeAsText(args[0]);
+        //ex.print();
 
         // execute program
         env.execute("Flink Streaming Java API Skeleton");
     }
 
-    //questa fuinzione dovrebbe cancellare i dublicati
+    //questa fuinzione dovrebbe cancellare i dublicati E funziona alla grandeeeeeee!!!!
     // link di riferimento -> https://stackoverflow.com/questions/35599069/apache-flink-0-10-how-to-get-the-first-occurence-of-a-composite-key-from-an-unbo
     public static class DuplicateFilter extends RichFlatMapFunction<Tuple7<String, Integer, Long, Double, Double, Double, Double>, Tuple7<String, Integer, Long, Double, Double, Double, Double>> {
 
