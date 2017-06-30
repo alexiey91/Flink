@@ -1,5 +1,6 @@
 package main.java.it.valenti.salome.flink;
 
+import org.apache.flink.api.common.JobExecutionResult;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
@@ -9,10 +10,12 @@ import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.java.tuple.Tuple5;
 import org.apache.flink.api.java.tuple.Tuple7;
 import org.apache.flink.configuration.Configuration;
+import org.apache.flink.core.fs.FileSystem;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.timestamps.AscendingTimestampExtractor;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.rabbitmq.RMQSource;
 import org.apache.flink.streaming.connectors.rabbitmq.common.RMQConnectionConfig;
@@ -40,7 +43,7 @@ public class Query1 {
             //out--> sid conteggio e Stringa con tutti i campi
             //double t= Math.floor(Double.parseDouble(tokens[1]));
             // long l = (long)t;
-
+            // id-counteggio-timestamp-x-y-z-v
             out.collect(new Tuple7<String, Integer, Long, Double, Double, Double, Double>(tokens[0], 0, Long.parseLong(tokens[1]), Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]),
                     Double.parseDouble(tokens[4]), Double.parseDouble(tokens[5])));
 
@@ -159,8 +162,9 @@ public class Query1 {
 
 
             }
+        //start-fine-id-distanza-velocità
 
-            output.collect(new Tuple5<Long, Long, String, Double, Double>(input.f3.longValue(), input.f2, input.f0, input.f5, input.f6));
+            output.collect(new Tuple5<>(input.f2,input.f3.longValue(), input.f0, input.f5, input.f6));
         }
     }
 
@@ -168,8 +172,8 @@ public class Query1 {
         // set up the streaming execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-        env.setParallelism(3);
-        org.apache.flink.streaming.api.windowing.time.Time window1 = org.apache.flink.streaming.api.windowing.time.Time.seconds(2);
+        //env.setParallelism(3);
+
 
         final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
                 .setHost("localhost")
@@ -202,8 +206,7 @@ public class Query1 {
                                 return element.f2;
                             }
                         }).keyBy(0)
-                        .timeWindow(Time.minutes(1))
-
+                        .window(TumblingEventTimeWindows.of(Time.minutes(1)))
                         .reduce(new ReduceFunction<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
 
@@ -213,8 +216,8 @@ public class Query1 {
                             public Tuple7<String, Integer, Long, Double, Double, Double, Double> reduce(Tuple7<String, Integer, Long, Double, Double, Double, Double> value1, Tuple7<String, Integer, Long, Double, Double, Double, Double> value2)
                                     throws Exception {
                                 double media = 0;
-                                double distance = 0;
-                                long time = value1.f2;
+                                double distance ;
+                                double time = value1.f2;
                                 if (value2 != null) {
                                     media = value1.f6 + (value2.f6 - value1.f6) / (value1.f1 + 1);
                                     distance = value1.f5 + (value2.f6 / 200);
@@ -222,9 +225,10 @@ public class Query1 {
                                     time = value2.f2;
                                 } else distance = (value1.f6 / 200);
                                 // System.out.println("media"+media+" distance= "+distance+" m"+" difference x ="+(value2.f3-value1.f3)+" difference y ="+(value2.f4-value1.f4));
-                                return new Tuple7<String, Integer, Long, Double, Double, Double, Double>(value1.f0, value1.f1 + 1, time, value1.f2.doubleValue(), value1.f4, distance, media);
+                                //return new Tuple7<>(value1.f0, value1.f1 + 1, time, value1.f2.doubleValue(), value1.f4, distance, media);
+                                return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, time , value1.f4, distance, media);
                             }
-                        }).keyBy(0).flatMap(new DuplicateFilter());
+                        });
 
 
         DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> timeWindow2 =
@@ -249,7 +253,7 @@ public class Query1 {
                                     throws Exception {
                                 double media = 0;
                                 double distance = 0;
-                                long time = value1.f2;
+                                double time = value1.f2;
                                 if (value2 != null) {
                                     media = value1.f6 + (value2.f6 - value1.f6) / (value1.f1 + 1);
                                     distance = value1.f5 + (value2.f6 / 200);
@@ -257,9 +261,9 @@ public class Query1 {
                                     time = value2.f2;
                                 } else distance = (value1.f6 / 200);
                                 // System.out.println("media"+media+" distance= "+distance+" m"+" difference x ="+(value2.f3-value1.f3)+" difference y ="+(value2.f4-value1.f4));
-                                return new Tuple7<String, Integer, Long, Double, Double, Double, Double>(value1.f0, value1.f1 + 1, time, value1.f2.doubleValue(), value1.f4, distance, media);
+                                return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, time , value1.f4, distance, media);
                             }
-                        }).keyBy(0).flatMap(new DuplicateFilter());
+                        });
 
         DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> timeWindow3 =
                 stream.flatMap(new LineSplitter())
@@ -282,8 +286,8 @@ public class Query1 {
                             public Tuple7<String, Integer, Long, Double, Double, Double, Double> reduce(Tuple7<String, Integer, Long, Double, Double, Double, Double> value1, Tuple7<String, Integer, Long, Double, Double, Double, Double> value2)
                                     throws Exception {
                                 double media = 0;
-                                double distance = 0;
-                                long time = value1.f2;
+                                double distance ;
+                                double time = value1.f2;
                                 if (value2 != null) {
                                     media = value1.f6 + (value2.f6 - value1.f6) / (value1.f1 + 1);
                                     distance = value1.f5 + (value2.f6 / 200);
@@ -291,14 +295,15 @@ public class Query1 {
                                     time = value2.f2;
                                 } else distance = (value1.f6 / 200);
                                 // System.out.println("media"+media+" distance= "+distance+" m"+" difference x ="+(value2.f3-value1.f3)+" difference y ="+(value2.f4-value1.f4));
-                                return new Tuple7<String, Integer, Long, Double, Double, Double, Double>(value1.f0, value1.f1 + 1, time, value1.f2.doubleValue(), value1.f4, distance, media);
+                                return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, time , value1.f4, distance, media);
                             }
-                        }).keyBy(0).flatMap(new DuplicateFilter());
+                        });
 
 
 
         DataStream<Tuple5<Long, Long, String, Double, Double>> query1 = ex.flatMap(new Output())
                 .keyBy(2)
+                .countWindow(2)
                 .reduce(new ReduceFunction<Tuple5<Long, Long, String, Double, Double>>() {
                     @Override
                     public Tuple5<Long, Long, String, Double, Double> reduce(Tuple5<Long, Long, String, Double, Double> value1, Tuple5<Long, Long, String, Double, Double> value2) throws Exception {
@@ -311,12 +316,14 @@ public class Query1 {
                             avg_distance = value1.f3;
                             avg_speed = value1.f4;
                         }
-                        return new Tuple5<Long, Long, String, Double, Double>(value1.f0, value1.f1, value1.f2, avg_distance, avg_speed);
+
+                        return new Tuple5<>(value1.f0, value2.f1, value2.f2, avg_distance, avg_speed);
                     }
                 });
 
         DataStream<Tuple5<Long, Long, String, Double, Double>> query1m5 = timeWindow2.flatMap(new Output())
                 .keyBy(2)
+                .countWindow(2)
                 .reduce(new ReduceFunction<Tuple5<Long, Long, String, Double, Double>>() {
                     @Override
                     public Tuple5<Long, Long, String, Double, Double> reduce(Tuple5<Long, Long, String, Double, Double> value1, Tuple5<Long, Long, String, Double, Double> value2) throws Exception {
@@ -329,12 +336,13 @@ public class Query1 {
                             avg_distance = value1.f3;
                             avg_speed = value1.f4;
                         }
-                        return new Tuple5<Long, Long, String, Double, Double>(value1.f0, value1.f1, value1.f2, avg_distance, avg_speed);
+                        return new Tuple5<>(value1.f0, value2.f1, value1.f2, avg_distance, avg_speed);
                     }
                 });
 
         DataStream<Tuple5<Long, Long, String, Double, Double>> query1m68 = timeWindow3.flatMap(new Output())
                 .keyBy(2)
+                .countWindow(2)
                 .reduce(new ReduceFunction<Tuple5<Long, Long, String, Double, Double>>() {
                     @Override
                     public Tuple5<Long, Long, String, Double, Double> reduce(Tuple5<Long, Long, String, Double, Double> value1, Tuple5<Long, Long, String, Double, Double> value2) throws Exception {
@@ -346,21 +354,21 @@ public class Query1 {
                         } else {
                             avg_distance = value1.f3;
                             avg_speed = value1.f4;
-                        }
-                        return new Tuple5<Long, Long, String, Double, Double>(value1.f0, value1.f1, value1.f2, avg_distance, avg_speed);
+                        }//tstart stop id distanza velocità
+                        return new Tuple5<>(value1.f0, value2.f1, value2.f2, avg_distance, avg_speed);
                     }
-                });
+                });//.keyBy(2).flatMap(new DuplicateFilter());
 
-        query1.writeAsText(args[0]);
-        query1m5.writeAsText(args[1]);
-        query1m68.writeAsText(args[2]);
+        query1.writeAsText(args[0], FileSystem.WriteMode.NO_OVERWRITE);
+        query1m5.writeAsText(args[1], FileSystem.WriteMode.NO_OVERWRITE);
+        query1m68.writeAsText(args[2], FileSystem.WriteMode.NO_OVERWRITE);
         // execute program
         env.execute("Flink Streaming Java API Skeleton");
     }
 
     //questa fuinzione dovrebbe cancellare i dublicati E funziona alla grandeeeeeee!!!!
     // link di riferimento -> https://stackoverflow.com/questions/35599069/apache-flink-0-10-how-to-get-the-first-occurence-of-a-composite-key-from-an-unbo
-    public static class DuplicateFilter extends RichFlatMapFunction<Tuple7<String, Integer, Long, Double, Double, Double, Double>, Tuple7<String, Integer, Long, Double, Double, Double, Double>> {
+    public static class DuplicateFilter extends RichFlatMapFunction<Tuple5<Long, Long, String, Double, Double>, Tuple5<Long, Long, String, Double, Double>> {
 
         static final ValueStateDescriptor<Boolean> descriptor = new ValueStateDescriptor<>("seen", Boolean.class, false);
         private ValueState<Boolean> operatorState;
@@ -371,7 +379,7 @@ public class Query1 {
         }
 
         @Override
-        public void flatMap(Tuple7<String, Integer, Long, Double, Double, Double, Double> value, Collector<Tuple7<String, Integer, Long, Double, Double, Double, Double>> out) throws Exception {
+        public void flatMap(Tuple5<Long, Long, String, Double, Double> value, Collector<Tuple5<Long, Long, String, Double, Double>> out) throws Exception {
             if (!operatorState.value()) {
                 // we haven't seen the element yet
                 out.collect(value);
