@@ -22,13 +22,16 @@ import org.apache.flink.streaming.connectors.rabbitmq.common.RMQConnectionConfig
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.util.Collector;
 
+import java.util.Date;
+import java.util.Timer;
+
 
 /**
  * Created by root on 27/06/17.
  */
 public class Query1 {
     private final static String QUEUE_NAME = "PIO";
-
+    static Date time = new Date();
     public static final class LineSplitter implements FlatMapFunction<String, Tuple7<String, Integer, Long, Double, Double, Double, Double>> {
 
         /**
@@ -174,6 +177,7 @@ public class Query1 {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         //env.setParallelism(3);
 
+        System.out.println("Starting Test= "+time.getTime() );
 
         final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
                 .setHost("localhost")
@@ -206,7 +210,7 @@ public class Query1 {
                                 return element.f2;
                             }
                         }).keyBy(0)
-                        .window(TumblingEventTimeWindows.of(Time.minutes(1)))
+                        .window(TumblingEventTimeWindows.of(Time.minutes(Long.parseLong(args[0]))))
                         .reduce(new ReduceFunction<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
 
@@ -231,7 +235,7 @@ public class Query1 {
                         });
 
 
-        DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> timeWindow2 =
+        /*DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> timeWindow2 =
                 stream.flatMap(new LineSplitter())
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
@@ -264,8 +268,8 @@ public class Query1 {
                                 return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, time , value1.f4, distance, media);
                             }
                         });
-
-        DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> timeWindow3 =
+*/
+      /*  DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> timeWindow3 =
                 stream.flatMap(new LineSplitter())
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
@@ -298,7 +302,7 @@ public class Query1 {
                                 return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, time , value1.f4, distance, media);
                             }
                         });
-
+*/
 
 
         DataStream<Tuple5<Long, Long, String, Double, Double>> query1 = ex.flatMap(new Output())
@@ -309,6 +313,7 @@ public class Query1 {
                     public Tuple5<Long, Long, String, Double, Double> reduce(Tuple5<Long, Long, String, Double, Double> value1, Tuple5<Long, Long, String, Double, Double> value2) throws Exception {
                         double avg_speed = 0;
                         double avg_distance = 0;
+                        Date tuple_date = new Date();
                         if (value2 != null) {
                             avg_speed = (value1.f4 + value2.f4) / 2;
                             avg_distance = (value1.f3 + value2.f3) / 2;
@@ -316,12 +321,13 @@ public class Query1 {
                             avg_distance = value1.f3;
                             avg_speed = value1.f4;
                         }
+                        System.out.println("Id= "+ value2.f2+" Tuple Time "+tuple_date.getTime()+" ms");
 
                         return new Tuple5<>(value1.f0, value2.f1, value2.f2, avg_distance, avg_speed);
                     }
                 });
 
-        DataStream<Tuple5<Long, Long, String, Double, Double>> query1m5 = timeWindow2.flatMap(new Output())
+       /* DataStream<Tuple5<Long, Long, String, Double, Double>> query1m5 = timeWindow2.flatMap(new Output())
                 .keyBy(2)
                 .countWindow(2)
                 .reduce(new ReduceFunction<Tuple5<Long, Long, String, Double, Double>>() {
@@ -338,9 +344,9 @@ public class Query1 {
                         }
                         return new Tuple5<>(value1.f0, value2.f1, value1.f2, avg_distance, avg_speed);
                     }
-                });
+                });*/
 
-        DataStream<Tuple5<Long, Long, String, Double, Double>> query1m68 = timeWindow3.flatMap(new Output())
+        /*DataStream<Tuple5<Long, Long, String, Double, Double>> query1m68 = timeWindow3.flatMap(new Output())
                 .keyBy(2)
                 .countWindow(2)
                 .reduce(new ReduceFunction<Tuple5<Long, Long, String, Double, Double>>() {
@@ -357,11 +363,11 @@ public class Query1 {
                         }//tstart stop id distanza velocità
                         return new Tuple5<>(value1.f0, value2.f1, value2.f2, avg_distance, avg_speed);
                     }
-                });//.keyBy(2).flatMap(new DuplicateFilter());
+                });*///.keyBy(2).flatMap(new DuplicateFilter());
 
-        query1.writeAsText(args[0], FileSystem.WriteMode.NO_OVERWRITE);
-        query1m5.writeAsText(args[1], FileSystem.WriteMode.NO_OVERWRITE);
-        query1m68.writeAsText(args[2], FileSystem.WriteMode.NO_OVERWRITE);
+        query1.writeAsText(args[1], FileSystem.WriteMode.NO_OVERWRITE);
+       /* query1m5.writeAsText(args[1], FileSystem.WriteMode.NO_OVERWRITE);
+        query1m68.writeAsText(args[2], FileSystem.WriteMode.NO_OVERWRITE);*/
         // execute program
         env.execute("Flink Streaming Java API Skeleton");
     }
