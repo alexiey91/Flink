@@ -209,6 +209,8 @@ public class Query2 {
 
         if(args[1]!=null)
             timeWindow = Integer.parseInt(args[1]);
+        if(args[2]!=null)
+            env.setParallelism(Integer.parseInt(args[2]));
 
         System.out.println("Dopo dataStrem");
 
