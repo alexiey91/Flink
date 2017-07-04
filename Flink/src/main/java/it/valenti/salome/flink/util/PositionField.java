@@ -18,12 +18,13 @@ public class PositionField {
 
     public String positionCell(Double x, Double y){
     String cella="";
-    if(x <0) Math.abs(x);
     //valore per il calcolo della posizione della cella in y risperro il vertice in basso a sinistra
+    if(x <0) x=0.0;
     double adjustY= (Y_lenght/2)+y;
     double cellX = Math.round(x/x_cell);
     double cellY = Math.round(adjustY/y_cell);
-        DecimalFormat format = new DecimalFormat();
+    DecimalFormat format = new DecimalFormat();
+
     cella="("+format.format(cellX)+"-"+format.format(cellY)+")";
     return cella;}
 

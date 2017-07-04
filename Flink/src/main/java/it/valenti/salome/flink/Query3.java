@@ -9,6 +9,7 @@ import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
+import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.tuple.Tuple4;
 import org.apache.flink.api.java.tuple.Tuple5;
 import org.apache.flink.api.java.tuple.Tuple6;
@@ -25,8 +26,10 @@ import org.apache.flink.streaming.connectors.rabbitmq.common.RMQConnectionConfig
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.util.Collector;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 
 /**
@@ -155,35 +158,48 @@ public class Query3 {
 
             }
 
-           String tm1=positionField.positionCell(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
+            String positionCell=positionField.positionCell(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
 
 
-            out.collect(new Tuple5<>(Long.parseLong(tokens[1]),"",name,tm1,50L));
+            out.collect(new Tuple5<>(Long.parseLong(tokens[1]),"",name,positionCell,5L));
 
         }
     }
 
 
-    public static final class FinalOutput implements FlatMapFunction<Tuple5<Long, String, String, String,String>,String> {
+    public static final class FinalOutput implements FlatMapFunction<Tuple6<Long, String, String, String,String,Long>,String> {
 
         private static final long serialVersionUID = -6087546114124934588L;
 
         @Override
-        public void flatMap(Tuple5<Long, String, String, String,String> input, Collector<String> output) throws Exception {
-            output.collect("<t_start:"+input.f0+",t_end:"+input.f1+",name:"+input.f2+","+input.f4);
+        public void flatMap(Tuple6<Long, String, String, String,String,Long> input, Collector<String> output) throws Exception {
+            String [] token= input.f4.split(Pattern.quote(":"));//zona:value:zona:value:zona:value
+            ArrayList<String> zones = new ArrayList<>();
+            ArrayList<Long> zValue = new ArrayList<>();
+            for(int j =0;j<token.length;j++){
+                if(j%2==0 && !token[j].equals(""))  zones.add(token[j]);
+                else    zValue.add(Long.parseLong(token[j])*100/input.f5);
+            }
+
+            String list="";
+            for(int j =0;j<zones.size();j++)
+                list+="("+zones.get(j)+":"+zValue.get(j)+"%)\n";
+
+
+                output.collect("<t_start:"+input.f0+",t_end:"+input.f1+",name:"+input.f2+","+list);
         }
     }
-    public static final class MidOutput implements FlatMapFunction<Tuple5<Long, String, String, String,Long>,Tuple5<Long, String, String, String,String>> {
+    public static final class MidOutput implements FlatMapFunction<Tuple5<Long, String, String, String,Long>,Tuple6<Long, String, String, String,String,Long>> {
 
         private static final long serialVersionUID = -6087546114124934588L;
 
         @Override
-        public void flatMap(Tuple5<Long, String, String, String,Long> input, Collector<Tuple5<Long, String, String, String,String>> output) throws Exception {
-            output.collect(new Tuple5<>(input.f0,input.f1,input.f2,input.f3,input.f3+":"+(input.f4/60000)+"%"));
+        public void flatMap(Tuple5<Long, String, String, String,Long> input, Collector<Tuple6<Long, String, String, String,String,Long>> output) throws Exception {
+            output.collect(new Tuple6<>(input.f0,input.f1,input.f2,input.f3,input.f3+":"+input.f4,input.f4));
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         // set up the streaming execution environment
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
@@ -225,8 +241,12 @@ public class Query3 {
                             public long extractAscendingTimestamp(Tuple5<Long, String, String, String,Long> element) {
                                 return element.f0;
                             }
-                        }).keyBy(2,3)
-                        .window(TumblingEventTimeWindows.of(Time.minutes(timeWindow)))
+                        })
+                        .keyBy(new KeySelector<Tuple5<Long, String, String, String,Long>, String>() {
+                            public String getKey(Tuple5<Long, String, String, String,Long> wc) { return wc.f2+wc.f3; }
+                        })
+                        //.window(TumblingEventTimeWindows.of(Time.minutes(timeWindow)))
+                        .timeWindow(Time.minutes(timeWindow))
                         .reduce(new ReduceFunction<Tuple5<Long, String, String, String,Long>>() {
 
                             private static final long serialVersionUID = 7448326084914869599L;
@@ -235,23 +255,28 @@ public class Query3 {
                             public Tuple5<Long, String, String, String,Long> reduce(Tuple5<Long, String, String, String,Long> value1, Tuple5<Long, String, String, String,Long> value2)
                                     throws Exception {
                                 // timestamp-timestamp2-id-zonaCampo-tempoIncr
-                                return new Tuple5<>(value1.f0,value2.f0.toString(), value1.f2,value1.f3,value1.f4+value2.f4 );
+                                            //timestamp / larghezzaFinestra* (larghezzaFinestra+1) prende l'estremo destro della finestra
+                                Long endWindow = ( value1.f0/ Long.parseLong(args[1])*60000 )*(60000 +1)*Long.parseLong(args[1]);
+                                //return new Tuple5<>(value1.f0,value2.f1, value1.f2,value1.f3,value1.f4+value2.f4 );
+                                return new Tuple5<>(value1.f0,endWindow.toString(), value1.f2,value1.f3,value1.f4+5);
                             }
                         });
 
          DataStream<String> query = ex
                  .flatMap(new MidOutput())
                  .keyBy(2)
-                 .window(TumblingEventTimeWindows.of(Time.minutes(timeWindow)))
-                 .reduce(new ReduceFunction<Tuple5<Long, String, String, String,String>>() {
+                 //.window(TumblingEventTimeWindows.of(Time.minutes(timeWindow)))
+                 .timeWindow(Time.minutes(timeWindow))
+                 .reduce(new ReduceFunction<Tuple6<Long, String, String, String,String,Long>>() {
 
 
                      private static final long serialVersionUID = 7448326084914869599L;
 
                      @Override
-                     public Tuple5<Long, String, String, String,String> reduce(Tuple5<Long, String, String, String,String> value1, Tuple5<Long, String, String, String,String> value2)
+                     public Tuple6<Long, String, String, String,String,Long> reduce(Tuple6<Long, String, String, String,String,Long> value1, Tuple6<Long, String, String, String,String,Long> value2)
                              throws Exception {
-                         return new Tuple5<Long, String, String, String,String> (value1.f0,value2.f0.toString(), value1.f2,value1.f3,value1.f4+"|"+value2.f4 );
+                                                //start,end,id,zona,zona:tempo:zona:tempo,tempoTot
+                         return new Tuple6<> (value1.f0,value2.f0.toString(), value1.f2,value1.f3,value1.f4+":"+value2.f4 ,value1.f5 +value2.f5);
                      }
                  }).flatMap(new FinalOutput());
 
