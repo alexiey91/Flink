@@ -1,5 +1,6 @@
 package main.java.it.valenti.salome.flink;
 
+import main.java.it.valenti.salome.flink.util.PositionField;
 import main.java.it.valenti.salome.flink.util.TupleTreeSet;
 import main.java.it.valenti.salome.flink.util.ZoneMap;
 import main.java.it.valenti.salome.flink.util.ZoneSet;
@@ -42,6 +43,7 @@ public class Query3 {
         public void flatMap(String value, Collector<Tuple5<Long, String, String, String,Long>> out) {
             // normalize and split the line
             String[] tokens = value.toLowerCase().split(",");
+            PositionField positionField = new PositionField();
             //out--> sid conteggio e Stringa con tutti i campi
             //double t= Math.floor(Double.parseDouble(tokens[1]));
             // long l = (long)t;
@@ -153,18 +155,8 @@ public class Query3 {
 
             }
 
-            String tm1;
+           String tm1=positionField.positionCell(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
 
-            if(name.contains("v"))
-                tm1="zona";//temp.add(new ZoneSet("zona",50));
-            else if(name.contains("L"))
-                tm1="zonaA";//temp.add(new ZoneSet("zonaA",50));
-            else if(name.contains("Z"))
-                tm1="zonaB";//temp.add(new ZoneSet("zonaB",50));
-            else if(name.contains("W"))
-                tm1="zonaC";//temp.add(new ZoneSet("zonaC",50));
-            else tm1 = "assfa";
-            // timestamp-(timestamp)-id-zonaCampo-tempo
 
             out.collect(new Tuple5<>(Long.parseLong(tokens[1]),"",name,tm1,50L));
 
@@ -172,13 +164,22 @@ public class Query3 {
     }
 
 
-    public static final class FinalOutput implements FlatMapFunction<Tuple5<Long, String, String, String,Long>,String> {
+    public static final class FinalOutput implements FlatMapFunction<Tuple5<Long, String, String, String,String>,String> {
 
         private static final long serialVersionUID = -6087546114124934588L;
 
         @Override
-        public void flatMap(Tuple5<Long, String, String, String,Long> input, Collector<String> output) throws Exception {
-            output.collect("<t_start:"+input.f0+",t_end:"+input.f1+",name:"+input.f2+","+input.f3);
+        public void flatMap(Tuple5<Long, String, String, String,String> input, Collector<String> output) throws Exception {
+            output.collect("<t_start:"+input.f0+",t_end:"+input.f1+",name:"+input.f2+","+input.f4);
+        }
+    }
+    public static final class MidOutput implements FlatMapFunction<Tuple5<Long, String, String, String,Long>,Tuple5<Long, String, String, String,String>> {
+
+        private static final long serialVersionUID = -6087546114124934588L;
+
+        @Override
+        public void flatMap(Tuple5<Long, String, String, String,Long> input, Collector<Tuple5<Long, String, String, String,String>> output) throws Exception {
+            output.collect(new Tuple5<>(input.f0,input.f1,input.f2,input.f3,input.f3+":"+(input.f4/60000)+"%"));
         }
     }
 
@@ -188,6 +189,7 @@ public class Query3 {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         //env.setParallelism(3);
         int timeWindow= DEFAULT_SIZE;
+/*
 
         final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
                 .setHost("localhost")
@@ -205,6 +207,7 @@ public class Query3 {
                         QUEUE_NAME,                 // name of the RabbitMQ queue to consume
                         true,   // use correlation ids; can be false if only at-least-once is required
                         new SimpleStringSchema()));   // deserialization schema to turn messages into Java objects
+*/
 
         if(args[1]!=null)
             timeWindow = Integer.parseInt(args[1]);
@@ -213,9 +216,9 @@ public class Query3 {
 
         System.out.println("Dopo dataStrem");
 
-
+        //stream
         DataStream<Tuple5<Long, String, String, String,Long>> ex =
-                stream.flatMap(new LineSplitter())            // timestamp-(timestamp)-id-zonaCampo-tempo
+                env.readTextFile("C:\\Users\\Paolo\\Desktop\\flink-1.3.1\\FilterFile.txt").flatMap(new LineSplitter())            // timestamp-(timestamp)-id-zonaCampo-tempo
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple5<Long, String, String, String,Long>>() {
 
                             @Override
@@ -225,7 +228,6 @@ public class Query3 {
                         }).keyBy(2,3)
                         .window(TumblingEventTimeWindows.of(Time.minutes(timeWindow)))
                         .reduce(new ReduceFunction<Tuple5<Long, String, String, String,Long>>() {
-
 
                             private static final long serialVersionUID = 7448326084914869599L;
 
@@ -237,46 +239,22 @@ public class Query3 {
                             }
                         });
 
-        DataStream<String> query = ex
-                .keyBy(2)
-                .reduce(new ReduceFunction<Tuple5<Long, String, String, String, Long>>() {
-                    long windowActual = 1;
-                    ZoneMap map = new ZoneMap();
-                    //Set<ZoneSet> set = new TreeSet<>();
+         DataStream<String> query = ex
+                 .flatMap(new MidOutput())
+                 .keyBy(2)
+                 .window(TumblingEventTimeWindows.of(Time.minutes(timeWindow)))
+                 .reduce(new ReduceFunction<Tuple5<Long, String, String, String,String>>() {
 
-                    @Override
-                    public Tuple5<Long, String, String, String, Long> reduce(Tuple5<Long, String, String, String, Long> value1, Tuple5<Long, String, String, String, Long> value2)
-                            throws Exception {
-                       // System.out.print("VALUE1" + value1.f0 + "," + value1.f1 + "," + value1.f2 + "," + value1.f3 + "," + value1.f4);
-                        System.out.print("\nVALUE2" + value2.f0 + "," + value2.f1 + "," + value2.f2 + "," + value2.f3 + "," + value2.f4);
-                       // if(value1.f1.equals("") || value1.f1.isEmpty()) {
 
-                            if (Long.parseLong(value1.f1) - 60000*windowActual > 0) { //caso nuova finestra
-                                map = new ZoneMap();
-                                windowActual += 1;
-                                System.out.print("RECALL_VALUE1 " + value1.f0 + "," + value1.f1 + "," + value1.f2 + "," + value1.f3 + "," + value1.f4);
-                           //     System.out.print("\nRECALL_VALUE2 " + value2.f0 + "," + value2.f1 + "," + value2.f2 + "," + value2.f3 + "," + value2.f4);
-                                // set.add(new ZoneSet(value1.f3,value1.f4));
-                            }
-                        if(value2 == null || value2.f1.equals("") || value2.f1.isEmpty())
-                            map.updateMap(value1.f2, value1.f3, value1.f4);
-                        else
-                            map.updateMap(value1.f2, value2.f3, value2.f4);
+                     private static final long serialVersionUID = 7448326084914869599L;
 
-                        //set.add(new ZoneSet(value2.f3,value2.f4));
-                        String list = ":";
-                        //for (ZoneSet k : set)
+                     @Override
+                     public Tuple5<Long, String, String, String,String> reduce(Tuple5<Long, String, String, String,String> value1, Tuple5<Long, String, String, String,String> value2)
+                             throws Exception {
+                         return new Tuple5<Long, String, String, String,String> (value1.f0,value2.f0.toString(), value1.f2,value1.f3,value1.f4+"|"+value2.f4 );
+                     }
+                 }).flatMap(new FinalOutput());
 
-                        for (ZoneSet k : map.getMap().get(value1.f2))
-                            list += "<" + k.getId() + "," +k.getCnt()+ ">\n";
-                        System.out.println(value1.f0+"list[" + windowActual + "]" + list);
-
-                        if(value2.f1.equals("") || value2.f1.isEmpty())
-                            return new Tuple5<>(value1.f0, value1.f1, value1.f2, list, 0L);
-                        else
-                            return new Tuple5<>(value1.f0, value2.f1, value1.f2, list, 0L);
-                    }
-                }).flatMap(new FinalOutput());
 
 
         query.writeAsText(args[0], FileSystem.WriteMode.NO_OVERWRITE);

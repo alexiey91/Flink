@@ -6,10 +6,10 @@ import java.text.DecimalFormat;
  * Created by root on 02/07/17.
  */
 public class PositionField {
-    private double X_lenght= 52483;
-    private double Y_lenght = 67925;
-    private  double x_cell = 6560.375;
-    private double y_cell = 5225;
+    private double X_lenght= 52.483;
+    private double Y_lenght = 67.925;
+    private  double x_cell = 6.5604;
+    private double y_cell = 5.225;
 
     //traslo la y della metà di Y_lenght
     // converto le x in abs se negative
