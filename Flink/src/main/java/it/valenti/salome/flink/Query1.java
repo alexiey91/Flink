@@ -22,6 +22,8 @@ import org.apache.flink.streaming.connectors.rabbitmq.common.RMQConnectionConfig
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.util.Collector;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Timer;
 
@@ -33,6 +35,8 @@ public class Query1 {
     private final static String QUEUE_NAME = "PIO";
     static Date time = new Date();
     private final static int DEFAULT_SIZE = 1;
+    private final static double Y_lenght = 67.925;
+
 
     public static final class LineSplitter implements FlatMapFunction<String, Tuple7<String, Integer, Long, Double, Double, Double, Double>> {
 
@@ -48,9 +52,15 @@ public class Query1 {
             //out--> sid conteggio e Stringa con tutti i campi
             //double t= Math.floor(Double.parseDouble(tokens[1]));
             // long l = (long)t;
+
+            double adjustY= (Y_lenght/2)+Double.parseDouble(tokens[3]);
+            double x;
+            if(Double.parseDouble(tokens[2])<0) x=0;
+            else x= Double.parseDouble(tokens[2]);
+
             // id-counteggio-timestamp-x-y-z-v
-            out.collect(new Tuple7<String, Integer, Long, Double, Double, Double, Double>(tokens[0], 0, Long.parseLong(tokens[1]), Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]),
-                    Double.parseDouble(tokens[4]), Double.parseDouble(tokens[5])));
+            out.collect(new Tuple7<String, Integer, Long, Double, Double, Double, Double>(tokens[0], 0, Long.parseLong(tokens[1]), x, adjustY,
+                    0d, Double.parseDouble(tokens[5])));
 
         }
     }
@@ -216,7 +226,7 @@ public class Query1 {
                                 return element.f2;
                             }
                         }).keyBy(0)
-                        .window(TumblingEventTimeWindows.of(Time.minutes(Long.parseLong(args[0]))))
+                        .window(TumblingEventTimeWindows.of(Time.minutes(Long.parseLong(args[1]))))
                         .reduce(new ReduceFunction<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
 
@@ -226,89 +236,22 @@ public class Query1 {
                             public Tuple7<String, Integer, Long, Double, Double, Double, Double> reduce(Tuple7<String, Integer, Long, Double, Double, Double, Double> value1, Tuple7<String, Integer, Long, Double, Double, Double, Double> value2)
                                     throws Exception {
                                 double media = 0;
-                                double distance ;
-                                double time = value1.f2;
+                                double distance=value1.f5 ;
+                                //double time = value1.f2;
                                 if (value2 != null) {
                                     media = value1.f6 + (value2.f6 - value1.f6) / (value1.f1 + 1);
-                                    distance = value1.f5 + (value2.f6 / 200);
-                                    //distance = value1.f5 + Math.sqrt(Math.pow(value2.f3 - value1.f3, 2) + Math.pow(value2.f4 - value1.f4, 2));
-                                    time = value2.f2;
-                                } else distance = (value1.f6 / 200);
+                                   // distance = value1.f5 + (value2.f6 / 200);
+                                    distance = value1.f5 + Math.sqrt(Math.pow(value2.f3-value1.f3, 2) + Math.pow(value2.f4 - value1.f4, 2));
+                                 //   time = value2.f2;
+                                } //else distance = (value1.f6 / 200);
                                 // System.out.println("media"+media+" distance= "+distance+" m"+" difference x ="+(value2.f3-value1.f3)+" difference y ="+(value2.f4-value1.f4));
                                 //return new Tuple7<>(value1.f0, value1.f1 + 1, time, value1.f2.doubleValue(), value1.f4, distance, media);
-                                return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, time , value1.f4, distance, media);
+                                return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, value2.f3, value2.f4, distance, media);
                             }
                         });
 
 
-        /*DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> timeWindow2 =
-                stream.flatMap(new LineSplitter())
-                        .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
-                            @Override
-                            public long extractAscendingTimestamp(Tuple7<String, Integer, Long, Double, Double, Double, Double> element) {
-                                // System.out.println("Timestamp" + element.f2 + " ID" + element.f0);
-                                return element.f2;
-                            }
-                        }).keyBy(0)
-                        .timeWindow(Time.minutes(5))
-
-                        .reduce(new ReduceFunction<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
-
-
-                            private static final long serialVersionUID = 7448326084914869599L;
-
-                            @Override
-                            public Tuple7<String, Integer, Long, Double, Double, Double, Double> reduce(Tuple7<String, Integer, Long, Double, Double, Double, Double> value1, Tuple7<String, Integer, Long, Double, Double, Double, Double> value2)
-                                    throws Exception {
-                                double media = 0;
-                                double distance = 0;
-                                double time = value1.f2;
-                                if (value2 != null) {
-                                    media = value1.f6 + (value2.f6 - value1.f6) / (value1.f1 + 1);
-                                    distance = value1.f5 + (value2.f6 / 200);
-                                    //distance = value1.f5 + Math.sqrt(Math.pow(value2.f3 - value1.f3, 2) + Math.pow(value2.f4 - value1.f4, 2));
-                                    time = value2.f2;
-                                } else distance = (value1.f6 / 200);
-                                // System.out.println("media"+media+" distance= "+distance+" m"+" difference x ="+(value2.f3-value1.f3)+" difference y ="+(value2.f4-value1.f4));
-                                return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, time , value1.f4, distance, media);
-                            }
-                        });
-*/
-      /*  DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> timeWindow3 =
-                stream.flatMap(new LineSplitter())
-                        .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
-
-                            @Override
-                            public long extractAscendingTimestamp(Tuple7<String, Integer, Long, Double, Double, Double, Double> element) {
-                                // System.out.println("Timestamp" + element.f2 + " ID" + element.f0);
-                                return element.f2;
-                            }
-                        }).keyBy(0)
-                        .timeWindow(Time.minutes(68))
-
-                        .reduce(new ReduceFunction<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
-
-
-                            private static final long serialVersionUID = 7448326084914869599L;
-
-                            @Override
-                            public Tuple7<String, Integer, Long, Double, Double, Double, Double> reduce(Tuple7<String, Integer, Long, Double, Double, Double, Double> value1, Tuple7<String, Integer, Long, Double, Double, Double, Double> value2)
-                                    throws Exception {
-                                double media = 0;
-                                double distance ;
-                                double time = value1.f2;
-                                if (value2 != null) {
-                                    media = value1.f6 + (value2.f6 - value1.f6) / (value1.f1 + 1);
-                                    distance = value1.f5 + (value2.f6 / 200);
-                                    //distance = value1.f5 + Math.sqrt(Math.pow(value2.f3 - value1.f3, 2) + Math.pow(value2.f4 - value1.f4, 2));
-                                    time = value2.f2;
-                                } else distance = (value1.f6 / 200);
-                                // System.out.println("media"+media+" distance= "+distance+" m"+" difference x ="+(value2.f3-value1.f3)+" difference y ="+(value2.f4-value1.f4));
-                                return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, time , value1.f4, distance, media);
-                            }
-                        });
-*/
 
 
         DataStream<Tuple5<Long, Long, String, Double, Double>> query1 = ex.flatMap(new Output())
@@ -329,52 +272,16 @@ public class Query1 {
                         }
                         System.out.println("Id= "+ value2.f2+" Tuple Time "+tuple_date.getTime()+" ms");
                         Long endWindow = (value1.f0/EndWindow+1)*EndWindow;
+                        NumberFormat format = new DecimalFormat("###.##");
 
-                        return new Tuple5<>(value1.f0, endWindow, value2.f2, avg_distance, avg_speed);
+                        return new Tuple5<>(value1.f0, endWindow, value2.f2,  Double.parseDouble(format.format(avg_distance)), Double.parseDouble(format.format(avg_speed)));
                     }
                 });
 
-       /* DataStream<Tuple5<Long, Long, String, Double, Double>> query1m5 = timeWindow2.flatMap(new Output())
-                .keyBy(2)
-                .countWindow(2)
-                .reduce(new ReduceFunction<Tuple5<Long, Long, String, Double, Double>>() {
-                    @Override
-                    public Tuple5<Long, Long, String, Double, Double> reduce(Tuple5<Long, Long, String, Double, Double> value1, Tuple5<Long, Long, String, Double, Double> value2) throws Exception {
-                        double avg_speed = 0;
-                        double avg_distance = 0;
-                        if (value2 != null) {
-                            avg_speed = (value1.f4 + value2.f4) / 2;
-                            avg_distance = (value1.f3 + value2.f3) / 2;
-                        } else {
-                            avg_distance = value1.f3;
-                            avg_speed = value1.f4;
-                        }
-                        return new Tuple5<>(value1.f0, value2.f1, value1.f2, avg_distance, avg_speed);
-                    }
-                });*/
 
-        /*DataStream<Tuple5<Long, Long, String, Double, Double>> query1m68 = timeWindow3.flatMap(new Output())
-                .keyBy(2)
-                .countWindow(2)
-                .reduce(new ReduceFunction<Tuple5<Long, Long, String, Double, Double>>() {
-                    @Override
-                    public Tuple5<Long, Long, String, Double, Double> reduce(Tuple5<Long, Long, String, Double, Double> value1, Tuple5<Long, Long, String, Double, Double> value2) throws Exception {
-                        double avg_speed = 0;
-                        double avg_distance = 0;
-                        if (value2 != null) {
-                            avg_speed = (value1.f4 + value2.f4) / 2;
-                            avg_distance = (value1.f3 + value2.f3) / 2;
-                        } else {
-                            avg_distance = value1.f3;
-                            avg_speed = value1.f4;
-                        }//tstart stop id distanza velocità
-                        return new Tuple5<>(value1.f0, value2.f1, value2.f2, avg_distance, avg_speed);
-                    }
-                });*///.keyBy(2).flatMap(new DuplicateFilter());
 
-        query1.writeAsText(args[1], FileSystem.WriteMode.NO_OVERWRITE);
-       /* query1m5.writeAsText(args[1], FileSystem.WriteMode.NO_OVERWRITE);
-        query1m68.writeAsText(args[2], FileSystem.WriteMode.NO_OVERWRITE);*/
+        query1.writeAsText(args[0], FileSystem.WriteMode.NO_OVERWRITE);
+
         // execute program
         env.execute("Flink Streaming Java API Skeleton");
     }

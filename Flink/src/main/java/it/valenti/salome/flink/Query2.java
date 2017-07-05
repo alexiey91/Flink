@@ -21,6 +21,8 @@ import org.apache.flink.streaming.connectors.rabbitmq.common.RMQConnectionConfig
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.util.Collector;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -213,9 +215,6 @@ public class Query2 {
             env.setParallelism(Integer.parseInt(args[2]));
         final long EndWindow = timeWindow*60000;
 
-        System.out.println("Dopo dataStrem");
-
-
         DataStream<Tuple6<String, Integer, Long, Double, Double, Double>> ex =
                 env.readTextFile("/home/alessandro/Scrivania/FilterFile.txt").flatMap(new LineSplitter())
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple6<String, Integer, Long, Double, Double, Double>>() {
@@ -283,9 +282,10 @@ public class Query2 {
                         if(count == 0)
                             treeSet.add(new TupleTreeSet(value1.f2,value1.f3));
                         treeSet.add(new TupleTreeSet(value2.f2,value2.f3));
+                        NumberFormat format = new DecimalFormat("###.##");
 
                         for (TupleTreeSet t : treeSet) {
-                            set+=", id:"+t.getId()+", velocità:"+t.getVel();
+                            set+=", id:"+t.getId()+", velocità:"+format.format(t.getVel());
                             c--;
                             if(c<=0) break;
                         }
