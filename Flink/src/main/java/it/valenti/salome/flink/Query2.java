@@ -190,7 +190,7 @@ public class Query2 {
         //env.setParallelism(3);
         int timeWindow= DEFAULT_SIZE;
 
-        final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
+       /* final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
                 .setHost("localhost")
                 .setPort(5672)
                 .setVirtualHost("/")
@@ -205,18 +205,19 @@ public class Query2 {
                         connectionConfig,            // config for the RabbitMQ connection
                         QUEUE_NAME,                 // name of the RabbitMQ queue to consume
                         true,   // use correlation ids; can be false if only at-least-once is required
-                        new SimpleStringSchema()));   // deserialization schema to turn messages into Java objects
+                        new SimpleStringSchema()));*/   // deserialization schema to turn messages into Java objects
 
         if(args[1]!=null)
             timeWindow = Integer.parseInt(args[1]);
         if(args[2]!=null)
             env.setParallelism(Integer.parseInt(args[2]));
+        final long EndWindow = timeWindow*60000;
 
         System.out.println("Dopo dataStrem");
 
 
         DataStream<Tuple6<String, Integer, Long, Double, Double, Double>> ex =
-                stream.flatMap(new LineSplitter())
+                env.readTextFile("/home/alessandro/Scrivania/FilterFile.txt").flatMap(new LineSplitter())
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple6<String, Integer, Long, Double, Double, Double>>() {
 
                             @Override
@@ -289,7 +290,9 @@ public class Query2 {
                             if(c<=0) break;
                         }
                         count+=1.0;
-                        String out = "<t_start:"+value1.f0 +", t_end"+ value2.f1+""+set+">";
+                        Long endWindow = (value1.f0/EndWindow+1)*EndWindow;
+
+                        String out = "<t_start:"+value1.f0 +", t_end"+ endWindow+""+set+">";
 
                         return new Tuple4<>(value1.f0,value2.f1,out,count);
                     }

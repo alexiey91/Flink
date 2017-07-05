@@ -32,6 +32,8 @@ import java.util.Timer;
 public class Query1 {
     private final static String QUEUE_NAME = "PIO";
     static Date time = new Date();
+    private final static int DEFAULT_SIZE = 1;
+
     public static final class LineSplitter implements FlatMapFunction<String, Tuple7<String, Integer, Long, Double, Double, Double, Double>> {
 
         /**
@@ -176,10 +178,11 @@ public class Query1 {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         //env.setParallelism(3);
+        int timeWindow= DEFAULT_SIZE;
 
         System.out.println("Starting Test= "+time.getTime() );
 
-        final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
+      /*  final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
                 .setHost("localhost")
                 .setPort(5672)
                 .setVirtualHost("/")
@@ -194,14 +197,17 @@ public class Query1 {
                         connectionConfig,            // config for the RabbitMQ connection
                         QUEUE_NAME,                 // name of the RabbitMQ queue to consume
                         true,   // use correlation ids; can be false if only at-least-once is required
-                        new SimpleStringSchema()));   // deserialization schema to turn messages into Java objects
+                        new SimpleStringSchema()));*/   // deserialization schema to turn messages into Java objects
 
 
-        System.out.println("Dopo dataStrem");
-
+        if(args[1]!=null)
+            timeWindow = Integer.parseInt(args[1]);
+        if(args[2]!=null)
+            env.setParallelism(Integer.parseInt(args[2]));
+        final long EndWindow = timeWindow*60000;
 
         DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> ex =
-                stream.flatMap(new LineSplitter())
+                env.readTextFile("/home/alessandro/Scrivania/FilterFile.txt").flatMap(new LineSplitter())
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
                             @Override
@@ -322,8 +328,9 @@ public class Query1 {
                             avg_speed = value1.f4;
                         }
                         System.out.println("Id= "+ value2.f2+" Tuple Time "+tuple_date.getTime()+" ms");
+                        Long endWindow = (value1.f0/EndWindow+1)*EndWindow;
 
-                        return new Tuple5<>(value1.f0, value2.f1, value2.f2, avg_distance, avg_speed);
+                        return new Tuple5<>(value1.f0, endWindow, value2.f2, avg_distance, avg_speed);
                     }
                 });
 

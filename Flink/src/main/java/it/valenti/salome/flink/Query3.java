@@ -26,6 +26,8 @@ import org.apache.flink.streaming.connectors.rabbitmq.common.RMQConnectionConfig
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 import org.apache.flink.util.Collector;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
@@ -51,10 +53,6 @@ public class Query3 {
             //double t= Math.floor(Double.parseDouble(tokens[1]));
             // long l = (long)t;
             /** qui bisogna convertire le coordinate in zona**/
-
-
-
-
 
             String name="";
             switch (tokens[0]) {
@@ -175,18 +173,24 @@ public class Query3 {
         public void flatMap(Tuple6<Long, String, String, String,String,Long> input, Collector<String> output) throws Exception {
             String [] token= input.f4.split(Pattern.quote(":"));//zona:value:zona:value:zona:value
             ArrayList<String> zones = new ArrayList<>();
-            ArrayList<Long> zValue = new ArrayList<>();
+            ArrayList<String> zValue = new ArrayList<>();
             for(int j =0;j<token.length;j++){
                 if(j%2==0 && !token[j].equals(""))  zones.add(token[j]);
-                else    zValue.add(Long.parseLong(token[j])*100/input.f5);
-            }
+                else {double value = Double.parseDouble(token[j]) * 100 / input.f5.doubleValue();
+                    NumberFormat format = new DecimalFormat("###.##");
+                    zValue.add(format.format(value));
+                }
+                }
 
             String list="";
             for(int j =0;j<zones.size();j++)
                 list+="("+zones.get(j)+":"+zValue.get(j)+"%)\n";
 
 
-                output.collect("<t_start:"+input.f0+",t_end:"+input.f1+",name:"+input.f2+","+list);
+           // Long endWindow = Math.round(( input.f0/ Long.parseLong(input.f1)*60000 )*(60000 +1))*Long.parseLong(input.f1);
+            Long endWindow = (input.f0/Long.parseLong(input.f1)+1)*Long.parseLong(input.f1);
+
+                output.collect("<t_start:"+input.f0+",t_end:"+endWindow+",name:"+input.f2+","+list);
         }
     }
     public static final class MidOutput implements FlatMapFunction<Tuple5<Long, String, String, String,Long>,Tuple6<Long, String, String, String,String,Long>> {
@@ -229,12 +233,13 @@ public class Query3 {
             timeWindow = Integer.parseInt(args[1]);
         if(args[2]!=null)
             env.setParallelism(Integer.parseInt(args[2]));
+        final long EndWindow = timeWindow*60000;
 
         System.out.println("Dopo dataStrem");
 
         //stream
         DataStream<Tuple5<Long, String, String, String,Long>> ex =
-                env.readTextFile("C:\\Users\\Paolo\\Desktop\\flink-1.3.1\\FilterFile.txt").flatMap(new LineSplitter())            // timestamp-(timestamp)-id-zonaCampo-tempo
+                env.readTextFile("/home/alessandro/Scrivania/FilterFile.txt").flatMap(new LineSplitter())            // timestamp-(timestamp)-id-zonaCampo-tempo
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple5<Long, String, String, String,Long>>() {
 
                             @Override
@@ -256,9 +261,9 @@ public class Query3 {
                                     throws Exception {
                                 // timestamp-timestamp2-id-zonaCampo-tempoIncr
                                             //timestamp / larghezzaFinestra* (larghezzaFinestra+1) prende l'estremo destro della finestra
-                                Long endWindow = ( value1.f0/ Long.parseLong(args[1])*60000 )*(60000 +1)*Long.parseLong(args[1]);
+                               // Long endWindow = ( value1.f0/ Long.parseLong(args[1])*60000 )*(60000 +1)*Long.parseLong(args[1]);
                                 //return new Tuple5<>(value1.f0,value2.f1, value1.f2,value1.f3,value1.f4+value2.f4 );
-                                return new Tuple5<>(value1.f0,endWindow.toString(), value1.f2,value1.f3,value1.f4+5);
+                                return new Tuple5<>(value1.f0,value2.f0.toString(), value1.f2,value1.f3,value1.f4+5);
                             }
                         });
 
@@ -276,7 +281,9 @@ public class Query3 {
                      public Tuple6<Long, String, String, String,String,Long> reduce(Tuple6<Long, String, String, String,String,Long> value1, Tuple6<Long, String, String, String,String,Long> value2)
                              throws Exception {
                                                 //start,end,id,zona,zona:tempo:zona:tempo,tempoTot
-                         return new Tuple6<> (value1.f0,value2.f0.toString(), value1.f2,value1.f3,value1.f4+":"+value2.f4 ,value1.f5 +value2.f5);
+                        // return new Tuple6<> (value1.f0,value2.f0.toString(), value1.f2,value1.f3,value1.f4+":"+value2.f4 ,value1.f5 +value2.f5);
+                         return new Tuple6<> (value1.f0,""+EndWindow, value1.f2,value1.f3,value1.f4+":"+value2.f4 ,value1.f5 +value2.f5);
+
                      }
                  }).flatMap(new FinalOutput());
 
