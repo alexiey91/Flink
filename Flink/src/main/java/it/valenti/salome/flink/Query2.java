@@ -191,23 +191,31 @@ public class Query2 {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         //env.setParallelism(3);
         int timeWindow= DEFAULT_SIZE;
+        if(args.length != 4)
+            System.out.println("Usage: .\\bin\\flink run -c main.java.it.valenti.salome.flink.Query3 .\\flink.jar <fileOut,sizeWindow in minutes, parallelism,source(0= flink/1=file)>");
 
-       /* final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
-                .setHost("localhost")
-                .setPort(5672)
-                .setVirtualHost("/")
-                .setUserName("guest")
-                .setPassword("guest")
-                .setConnectionTimeout(5000)
-                // .setTopologyRecoveryEnabled(false)
-                .build();
-        System.out.println("Prima di dataStrem");
-        final DataStream<String> stream = env
-                .addSource(new RMQSource<String>(
-                        connectionConfig,            // config for the RabbitMQ connection
-                        QUEUE_NAME,                 // name of the RabbitMQ queue to consume
-                        true,   // use correlation ids; can be false if only at-least-once is required
-                        new SimpleStringSchema()));*/   // deserialization schema to turn messages into Java objects
+        DataStream<String> stream;
+
+        if(args[3]=="0") {
+            final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
+                    .setHost("localhost")
+                    .setPort(5672)
+                    .setVirtualHost("/")
+                    .setUserName("guest")
+                    .setPassword("guest")
+                    .setConnectionTimeout(5000)
+                    // .setTopologyRecoveryEnabled(false)
+                    .build();
+            System.out.println("Prima di dataStrem");
+            stream = env
+                    .addSource(new RMQSource<String>(
+                            connectionConfig,            // config for the RabbitMQ connection
+                            QUEUE_NAME,                 // name of the RabbitMQ queue to consume
+                            true,   // use correlation ids; can be false if only at-least-once is required
+                            new SimpleStringSchema()));   // deserialization schema to turn messages into Java objects
+        }
+        else
+            stream = env.readTextFile("..\\FilterFile.txt");
 
         if(args[1]!=null)
             timeWindow = Integer.parseInt(args[1]);
@@ -216,7 +224,7 @@ public class Query2 {
         final long EndWindow = timeWindow*60000;
 
         DataStream<Tuple6<String, Integer, Long, Double, Double, Double>> ex =
-                env.readTextFile("/home/alessandro/Scrivania/FilterFile.txt").flatMap(new LineSplitter())
+                stream.flatMap(new LineSplitter())
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple6<String, Integer, Long, Double, Double, Double>>() {
 
                             @Override
@@ -285,14 +293,15 @@ public class Query2 {
                         NumberFormat format = new DecimalFormat("###.##");
 
                         for (TupleTreeSet t : treeSet) {
-                            set+=", id:"+t.getId()+", velocità:"+format.format(t.getVel());
+                            set+="  id:"+t.getId()+", velocità:"+format.format(t.getVel());
                             c--;
                             if(c<=0) break;
+                            else set+=" ; ";
                         }
                         count+=1.0;
                         Long endWindow = (value1.f0/EndWindow+1)*EndWindow;
 
-                        String out = "<t_start:"+value1.f0 +", t_end"+ endWindow+""+set+">";
+                        String out = "t_start:"+value1.f0 +", t_end:"+ endWindow+",<"+set+" >";
 
                         return new Tuple4<>(value1.f0,value2.f1,out,count);
                     }
@@ -301,29 +310,6 @@ public class Query2 {
         query2.writeAsText(args[0], FileSystem.WriteMode.NO_OVERWRITE);
         // execute program
         env.execute("Flink Streaming Java API Skeleton");
-    }
-
-    //questa fuinzione dovrebbe cancellare i dublicati E funziona alla grandeeeeeee!!!!
-    // link di riferimento -> https://stackoverflow.com/questions/35599069/apache-flink-0-10-how-to-get-the-first-occurence-of-a-composite-key-from-an-unbo
-    public static class DuplicateFilter extends RichFlatMapFunction<Tuple5<Long, Long, String, Double, Double>, Tuple5<Long, Long, String, Double, Double>> {
-
-        static final ValueStateDescriptor<Boolean> descriptor = new ValueStateDescriptor<>("seen", Boolean.class, false);
-        private ValueState<Boolean> operatorState;
-
-        @Override
-        public void open(Configuration configuration) {
-            operatorState = this.getRuntimeContext().getState(descriptor);
-        }
-
-        @Override
-        public void flatMap(Tuple5<Long, Long, String, Double, Double> value, Collector<Tuple5<Long, Long, String, Double, Double>> out) throws Exception {
-            if (!operatorState.value()) {
-                // we haven't seen the element yet
-                out.collect(value);
-                // set operator state to true so that we don't emit elements with this key again
-                operatorState.update(true);
-            }
-        }
     }
 
 }

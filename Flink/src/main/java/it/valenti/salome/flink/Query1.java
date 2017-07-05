@@ -59,7 +59,7 @@ public class Query1 {
             else x= Double.parseDouble(tokens[2]);
 
             // id-counteggio-timestamp-x-y-z-v
-            out.collect(new Tuple7<String, Integer, Long, Double, Double, Double, Double>(tokens[0], 0, Long.parseLong(tokens[1]), x, adjustY,
+            out.collect(new Tuple7<>(tokens[0], 0, Long.parseLong(tokens[1]), x, adjustY,
                     0d, Double.parseDouble(tokens[5])));
 
         }
@@ -191,24 +191,31 @@ public class Query1 {
         int timeWindow= DEFAULT_SIZE;
 
         System.out.println("Starting Test= "+time.getTime() );
+        if(args.length != 4)
+            System.out.println("Usage: .\\bin\\flink run -c main.java.it.valenti.salome.flink.Query3 .\\flink.jar <fileOut,sizeWindow in minutes, parallelism,source(0= flink/1=file)>");
 
-      /*  final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
-                .setHost("localhost")
-                .setPort(5672)
-                .setVirtualHost("/")
-                .setUserName("guest")
-                .setPassword("guest")
-                .setConnectionTimeout(5000)
-                // .setTopologyRecoveryEnabled(false)
-                .build();
-        System.out.println("Prima di dataStrem");
-        final DataStream<String> stream = env
-                .addSource(new RMQSource<String>(
-                        connectionConfig,            // config for the RabbitMQ connection
-                        QUEUE_NAME,                 // name of the RabbitMQ queue to consume
-                        true,   // use correlation ids; can be false if only at-least-once is required
-                        new SimpleStringSchema()));*/   // deserialization schema to turn messages into Java objects
+        DataStream<String> stream;
 
+        if(args[3]=="0") {
+            final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
+                    .setHost("localhost")
+                    .setPort(5672)
+                    .setVirtualHost("/")
+                    .setUserName("guest")
+                    .setPassword("guest")
+                    .setConnectionTimeout(5000)
+                    // .setTopologyRecoveryEnabled(false)
+                    .build();
+            System.out.println("Prima di dataStrem");
+            stream = env
+                    .addSource(new RMQSource<String>(
+                            connectionConfig,            // config for the RabbitMQ connection
+                            QUEUE_NAME,                 // name of the RabbitMQ queue to consume
+                            true,   // use correlation ids; can be false if only at-least-once is required
+                            new SimpleStringSchema()));   // deserialization schema to turn messages into Java objects
+        }
+        else
+            stream = env.readTextFile("..\\FilterFile.txt");
 
         if(args[1]!=null)
             timeWindow = Integer.parseInt(args[1]);
@@ -217,7 +224,7 @@ public class Query1 {
         final long EndWindow = timeWindow*60000;
 
         DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> ex =
-                env.readTextFile("/home/alessandro/Scrivania/FilterFile.txt").flatMap(new LineSplitter())
+                stream.flatMap(new LineSplitter())
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
                             @Override
@@ -254,7 +261,7 @@ public class Query1 {
 
 
 
-        DataStream<Tuple5<Long, Long, String, Double, Double>> query1 = ex.flatMap(new Output())
+        DataStream<String> query1 = ex.flatMap(new Output())
                 .keyBy(2)
                 .countWindow(2)
                 .reduce(new ReduceFunction<Tuple5<Long, Long, String, Double, Double>>() {
@@ -272,9 +279,14 @@ public class Query1 {
                         }
                         System.out.println("Id= "+ value2.f2+" Tuple Time "+tuple_date.getTime()+" ms");
                         Long endWindow = (value1.f0/EndWindow+1)*EndWindow;
-                        NumberFormat format = new DecimalFormat("###.##");
 
-                        return new Tuple5<>(value1.f0, endWindow, value2.f2,  Double.parseDouble(format.format(avg_distance)), Double.parseDouble(format.format(avg_speed)));
+                        return new Tuple5<>(value1.f0, endWindow, value2.f2, avg_distance, avg_speed);
+                    }
+                }).flatMap(new FlatMapFunction<Tuple5<Long, Long, String, Double, Double>, String>() {
+                    @Override
+                    public void flatMap(Tuple5<Long, Long, String, Double, Double> input, Collector<String> collector) throws Exception {
+                        NumberFormat format = new DecimalFormat("###.##");
+                        collector.collect(("t_start: "+input.f0+", t_end: "+input.f1+", id: "+ input.f2+", distance: "+format.format(input.f3)+", speed: "+format.format(input.f4)));
                     }
                 });
 

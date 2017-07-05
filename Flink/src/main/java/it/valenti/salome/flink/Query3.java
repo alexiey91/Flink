@@ -33,6 +33,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import static org.apache.flink.shaded.com.google.common.primitives.Longs.min;
+
 
 /**
  * Created by root on 27/06/17.
@@ -180,7 +182,7 @@ public class Query3 {
                     NumberFormat format = new DecimalFormat("###.##");
                     zValue.add(format.format(value));
                 }
-                }
+            }
 
             String list="";
             for(int j =0;j<zones.size();j++)
@@ -189,8 +191,7 @@ public class Query3 {
 
            // Long endWindow = Math.round(( input.f0/ Long.parseLong(input.f1)*60000 )*(60000 +1))*Long.parseLong(input.f1);
             Long endWindow = (input.f0/Long.parseLong(input.f1)+1)*Long.parseLong(input.f1);
-
-                output.collect("<t_start:"+input.f0+",t_end:"+endWindow+",name:"+input.f2+","+list);
+            output.collect("> t_start:"+input.f0+",t_end:"+endWindow+",name:"+input.f2+","+list);
         }
     }
     public static final class MidOutput implements FlatMapFunction<Tuple5<Long, String, String, String,Long>,Tuple6<Long, String, String, String,String,Long>> {
@@ -209,25 +210,31 @@ public class Query3 {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
         //env.setParallelism(3);
         int timeWindow= DEFAULT_SIZE;
-/*
+        if(args.length != 4)
+            System.out.println("Usage: .\\bin\\flink run -c main.java.it.valenti.salome.flink.Query3 .\\flink.jar <fileOut,sizeWindow in minutes, parallelism,source(0= flink/1=file)>");
 
-        final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
-                .setHost("localhost")
-                .setPort(5672)
-                .setVirtualHost("/")
-                .setUserName("guest")
-                .setPassword("guest")
-                .setConnectionTimeout(5000)
-                // .setTopologyRecoveryEnabled(false)
-                .build();
-        System.out.println("Prima di dataStrem");
-        final DataStream<String> stream = env
-                .addSource(new RMQSource<String>(
-                        connectionConfig,            // config for the RabbitMQ connection
-                        QUEUE_NAME,                 // name of the RabbitMQ queue to consume
-                        true,   // use correlation ids; can be false if only at-least-once is required
-                        new SimpleStringSchema()));   // deserialization schema to turn messages into Java objects
-*/
+        DataStream<String> stream;
+
+        if(args[3]=="0") {
+            final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
+                    .setHost("localhost")
+                    .setPort(5672)
+                    .setVirtualHost("/")
+                    .setUserName("guest")
+                    .setPassword("guest")
+                    .setConnectionTimeout(5000)
+                    // .setTopologyRecoveryEnabled(false)
+                    .build();
+            System.out.println("Prima di dataStrem");
+            stream = env
+                    .addSource(new RMQSource<String>(
+                            connectionConfig,            // config for the RabbitMQ connection
+                            QUEUE_NAME,                 // name of the RabbitMQ queue to consume
+                            true,   // use correlation ids; can be false if only at-least-once is required
+                            new SimpleStringSchema()));   // deserialization schema to turn messages into Java objects
+        }
+        else
+            stream = env.readTextFile("..\\FilterFile.txt");
 
         if(args[1]!=null)
             timeWindow = Integer.parseInt(args[1]);
@@ -239,7 +246,7 @@ public class Query3 {
 
         //stream
         DataStream<Tuple5<Long, String, String, String,Long>> ex =
-                env.readTextFile("/home/alessandro/Scrivania/FilterFile.txt").flatMap(new LineSplitter())            // timestamp-(timestamp)-id-zonaCampo-tempo
+                stream.flatMap(new LineSplitter())            // timestamp-(timestamp)-id-zonaCampo-tempo
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple5<Long, String, String, String,Long>>() {
 
                             @Override
