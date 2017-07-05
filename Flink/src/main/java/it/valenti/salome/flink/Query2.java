@@ -196,7 +196,7 @@ public class Query2 {
 
         DataStream<String> stream;
 
-        if(args[3]=="0") {
+        if(args[3].equals("0")) {
             final RMQConnectionConfig connectionConfig = new RMQConnectionConfig.Builder()
                     .setHost("localhost")
                     .setPort(5672)
