@@ -52,7 +52,7 @@ public class StreamingJobRabbit {
                 String s = "-"+parts[0]+"-";
                 String test = "-4-8-10-12-97-98-99-100-105-106-";
                 if (Long.parseLong(parts[1]) < 0 || test.contains(s)) {
-                    System.out.println("long continue = " + Long.parseLong(parts[1]));
+                    //System.out.println("long continue = " + Long.parseLong(parts[1]));
                     continue;
                 }
                 else {
@@ -61,7 +61,7 @@ public class StreamingJobRabbit {
                         line += "," + parts[i + 1];
                     }
                     channel.basicPublish("", QUEUE_NAME, null, line.getBytes("UTF-8"));
-                    System.out.println(" [x] Sent '" + line + "'");
+                    //System.out.println(" [x] Sent '" + line + "'");
 
                     //Eseguere Lettura & Query1
                 }
