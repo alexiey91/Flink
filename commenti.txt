@@ -1,4 +1,0 @@
-credo ci sia un problema legato all'esistenza dei campi di value1 o value2.
-Può essere che uno dei due nel primo run impazzisca, e non inserisce la stringa 
-contenente il treeSet
-Non ho ancora usato la tua funzione, bisognerebbe agganciarla all'inizio 
