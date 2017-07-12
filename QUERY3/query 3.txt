@@ -1,16 +1,31 @@
 10:40 inizio
+
 11:30 fine
+
 Tuple totali 21246034
+
 Tuple finali 992
 
+
+
 5min
+
 12:44 inizio
+
 13:35 fine
+
 Tuple totali 21246034
+
 Tuple finali 208
 
+
+
 partita
+
 17:14 inizio
+
 18:10 fine
+
 Tuple totali 21246034
+
 Tuple finali 16

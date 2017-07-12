@@ -1,0 +1,29 @@
+
+ingresso 21246034
+
+> query1
+41 sec
+981 
+38 sec 
+211 
+36 sec
+32
+
+
+
+> query2
+38 sec
+61
+37 sec
+13
+36 sec
+2
+
+
+> query3
+40 sec
+1008
+41 sec
+224
+45 sec
+32
