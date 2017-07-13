@@ -126,3 +126,36 @@ il processamento sulla piattaforma di riferimento usata per la realizzazione del
 **Opzionale**: Insieme ad un gruppo che ha utilizzato un altro framework di data stream processing, confrontare,
 sulla stessa piattaforma di riferimento, le prestazioni in termini di tempo di latenza e throughput
 delle query ottenute dai due framework.
+
+# Prerequisiti
+
+Installare il framework Apache Flink e RabbitMq all'interno della propria macchina (disponibili sia per Linux che Windows).
+
+- Una volta effettuata tale procedura scaricare il codice sorgente ed utilizzare il comando (all'iterno della directory del progetto):
+            
+            sudo mvn clean
+            sudo mvn package
+            sudo cp target/flink-0.0.1-SNAPSHOT-jar-with-dependencies.jar ~/Directory_di_Flink
+
+- Una volta all'interno della directory di installazione di Flink eseguire: 
+            
+           Il demone di RabbitMQ 
+           sudo bin/start-local.sh
+           
+# Configurazione Flink con RabbitMQ
+
+-  Per eseguire il codice sorgente utilizzando il servizio di RabbitMQ occorre:
+            
+       sudo bin/flink run -c main.java.it.valenti.salome.flink.StreamingJobRabbit  flink-0.0.1-SNAPSHOT-jar-with-dependencies.jar  path_file_da_leggere
+       sudo bin/flink run -c main.java.it.valenti.salome.flink.Query1 flink-0.0.1-SNAPSHOT-jar-with-dependencies.jar path_file_output tempo_finestra numero_di_parallelizzazione  0
+
+# Configurazione Flink con file in locale 
+
+- Per eseguire il codice sorgente utilizzando la lettura sul file filtrato:
+             
+       sudo bin/flink run -c main.java.it.valenti.salome.flink.Query1 flink-0.0.1-SNAPSHOT-jar-with-dependencies.jar path_file_output tempo_finestra numero_di_parallelizzazione  1
+            
+                
+               
+
+
