@@ -31,24 +31,19 @@ import java.util.TreeSet;
  * Created by root on 27/06/17.
  */
 public class Query2 {
-    private final static String QUEUE_NAME = "PIO";
+    private final static String QUEUE_NAME = "CODA";
     private final static int DEFAULT_SIZE = 1;
     public static final class LineSplitter implements FlatMapFunction<String, Tuple6<String, Integer, Long, Double, Double, Double>> {
 
-        /**
-         *
-         */
+        /** normalizza e divide le linee lette dalla sorgente */
+
         private static final long serialVersionUID = -6087546114124934588L;
 
         @Override
         public void flatMap(String value, Collector<Tuple6<String, Integer, Long, Double, Double, Double>> out) {
-            // normalize and split the line
             String[] tokens = value.toLowerCase().split(",");
-            //out--> sid conteggio e Stringa con tutti i campi
-            //double t= Math.floor(Double.parseDouble(tokens[1]));
-            // long l = (long)t;
-            // id-counteggio-timestamp-x-y-v
-            out.collect(new Tuple6<>(tokens[0], 0, Long.parseLong(tokens[1]), Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]),
+            // id,counteggio,timestamp,*,*,v
+            out.collect(new Tuple6<>(tokens[0], 1, Long.parseLong(tokens[1]), 0d,0d,
                      Double.parseDouble(tokens[5])));
 
         }
@@ -56,12 +51,9 @@ public class Query2 {
 
     public static final class Output implements FlatMapFunction<Tuple6<String, Integer, Long, Double, Double, Double>, Tuple4<Long, Long, String, Double>> {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = -6087546114124934588L;
 
-
+        /** converte id -> nome */
         @Override
         public void flatMap(Tuple6<String, Integer, Long, Double, Double, Double> input, Collector<Tuple4<Long, Long, String, Double>> output) throws Exception {
 
@@ -166,7 +158,7 @@ public class Query2 {
 
 
             }
-        //start-fine-id-velocità
+        //start-fine-name-velocità
 
             output.collect(new Tuple4<>(input.f2,input.f3.longValue(), input.f0, input.f5));
         }
@@ -174,9 +166,6 @@ public class Query2 {
 
     public static final class FinalOutput implements FlatMapFunction<Tuple4<Long, Long, String, Double>,String> {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = -6087546114124934588L;
 
         @Override
@@ -186,10 +175,11 @@ public class Query2 {
     }
 
     public static void main(String[] args) throws Exception {
-        // set up the streaming execution environment
+
+        /** configurazione */
+
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-        //env.setParallelism(3);
         int timeWindow= DEFAULT_SIZE;
         if(args.length != 4)
             System.out.println("Usage: .\\bin\\flink run -c main.java.it.valenti.salome.flink.Query3 .\\flink.jar <fileOut,sizeWindow in minutes, parallelism,source(0= flink/1=file)>");
@@ -223,13 +213,13 @@ public class Query2 {
             env.setParallelism(Integer.parseInt(args[2]));
         final long EndWindow = timeWindow*60000;
 
+        /** si calcola la velocità media di ogni giocatore all'interno della finestra */
         DataStream<Tuple6<String, Integer, Long, Double, Double, Double>> ex =
                 stream.flatMap(new LineSplitter())
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple6<String, Integer, Long, Double, Double, Double>>() {
 
                             @Override
                             public long extractAscendingTimestamp(Tuple6<String, Integer, Long, Double, Double, Double> element) {
-                                // System.out.println("Timestamp" + element.f2 + " ID" + element.f0);
                                 return element.f2;
                             }
                         }).keyBy(0)
@@ -248,14 +238,13 @@ public class Query2 {
                                     media = value1.f5 + (value2.f5 - value1.f5) / (value1.f1 + 1);
                                     time = value2.f2;
                                 }
-                                // System.out.println("media"+media+" distance= "+distance+" m"+" difference x ="+(value2.f3-value1.f3)+" difference y ="+(value2.f4-value1.f4));
-                                //return new Tuple7<>(value1.f0, value1.f1 + 1, time, value1.f2.doubleValue(), value1.f4, distance, media);
+                                // id-counteggio,start,end,y,velocità media
                                 return new Tuple6<>(value1.f0, value1.f1 + 1, value1.f2, time , value1.f4, media);
                             }
                         });
 
 
-
+        /** si effettua la media tra i sensori associati a ciascun giocatore */
         DataStream<Tuple4<Long, Long, String, Double>> query1 = ex.flatMap(new Output())
                 .keyBy(2)
                 .countWindow(2)
@@ -271,11 +260,13 @@ public class Query2 {
                         return new Tuple4<>(value1.f0, value2.f1, value2.f2, avg_speed);
                     }
                 });
-        //Tuple4<Long, Long, String, Double>
+        /** si attendono i valori finali riguardanti la media della velocità per ogni giocatore.
+         * quindi si attendono 16 tuple per farne l'ordinamento mediante l'utilizzo dei treeSet
+         **/
         DataStream<String> query2= query1.countWindowAll(16)
                 .reduce(new ReduceFunction<Tuple4<Long, Long, String, Double>>() {
                     Set<TupleTreeSet> treeSet = new TreeSet<>();
-                    double count=0.0;
+                    double count=0;
 
                     @Override
                     public Tuple4<Long, Long, String, Double> reduce(Tuple4<Long, Long, String, Double> value1, Tuple4<Long, Long, String, Double> value2) throws Exception {
@@ -283,7 +274,6 @@ public class Query2 {
                         int c=5;
                         String set="";
                         if(count==15){
-                            //System.out.println("tree-size"+treeSet.size());
                             count =0;
                             treeSet = new TreeSet<>();
                         }

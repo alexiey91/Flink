@@ -32,7 +32,7 @@ import java.util.Timer;
  * Created by root on 27/06/17.
  */
 public class Query1 {
-    private final static String QUEUE_NAME = "PIO";
+    private final static String QUEUE_NAME = "CODA";
     static Date time = new Date();
     private final static int DEFAULT_SIZE = 1;
     private final static double Y_lenght = 67.925;
@@ -40,36 +40,30 @@ public class Query1 {
 
     public static final class LineSplitter implements FlatMapFunction<String, Tuple7<String, Integer, Long, Double, Double, Double, Double>> {
 
-        /**
-         *
-         */
+        /** normalizza e divide le linee lette dalla sorgente */
+
         private static final long serialVersionUID = -6087546114124934588L;
 
         @Override
         public void flatMap(String value, Collector<Tuple7<String, Integer, Long, Double, Double, Double, Double>> out) {
             // normalize and split the line
             String[] tokens = value.toLowerCase().split(",");
-            //out--> sid conteggio e Stringa con tutti i campi
-            //double t= Math.floor(Double.parseDouble(tokens[1]));
-            // long l = (long)t;
 
             double adjustY= (Y_lenght/2)+Double.parseDouble(tokens[3]);
             double x;
             if(Double.parseDouble(tokens[2])<0) x=0;
             else x= Double.parseDouble(tokens[2]);
 
-            // id-counteggio-timestamp-x-y-z-v
-            out.collect(new Tuple7<>(tokens[0], 0, Long.parseLong(tokens[1]), x, adjustY,
+            // id-conteggio-timestamp-x-y-z-v
+            out.collect(new Tuple7<>(tokens[0], 1, Long.parseLong(tokens[1]), x, adjustY,
                     0d, Double.parseDouble(tokens[5])));
 
         }
     }
 
     public static final class Output implements FlatMapFunction<Tuple7<String, Integer, Long, Double, Double, Double, Double>, Tuple5<Long, Long, String, Double, Double>> {
+        /** converte id -> nome */
 
-        /**
-         *
-         */
         private static final long serialVersionUID = -6087546114124934588L;
 
 
@@ -177,17 +171,19 @@ public class Query1 {
 
 
             }
-        //start-fine-id-distanza-velocità
+            // ingresso id-conteggio-start-x-y-distance-v
 
-            output.collect(new Tuple5<>(input.f2,input.f3.longValue(), input.f0, input.f5, input.f6));
+            //uscita start-*-name-distanza-velocità
+
+            output.collect(new Tuple5<>(input.f2,0L, input.f0, input.f5, input.f6));
         }
     }
 
     public static void main(String[] args) throws Exception {
-        // set up the streaming execution environment
+        /** configurazione */
+
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-        //env.setParallelism(3);
         int timeWindow= DEFAULT_SIZE;
 
         System.out.println("Starting Test= "+time.getTime() );
@@ -223,13 +219,14 @@ public class Query1 {
             env.setParallelism(Integer.parseInt(args[2]));
         final long EndWindow = timeWindow*60000;
 
+        /** si calcola la distanza percorsa da ogni giocatore e la velocità media all'interno della finestra */
+
         DataStream<Tuple7<String, Integer, Long, Double, Double, Double, Double>> ex =
                 stream.flatMap(new LineSplitter())
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple7<String, Integer, Long, Double, Double, Double, Double>>() {
 
                             @Override
                             public long extractAscendingTimestamp(Tuple7<String, Integer, Long, Double, Double, Double, Double> element) {
-                                // System.out.println("Timestamp" + element.f2 + " ID" + element.f0);
                                 return element.f2;
                             }
                         }).keyBy(0)
@@ -244,15 +241,12 @@ public class Query1 {
                                     throws Exception {
                                 double media = 0;
                                 double distance=value1.f5 ;
-                                //double time = value1.f2;
                                 if (value2 != null) {
                                     media = value1.f6 + (value2.f6 - value1.f6) / (value1.f1 + 1);
-                                   // distance = value1.f5 + (value2.f6 / 200);
                                     distance = value1.f5 + Math.sqrt(Math.pow(value2.f3-value1.f3, 2) + Math.pow(value2.f4 - value1.f4, 2));
-                                 //   time = value2.f2;
-                                } //else distance = (value1.f6 / 200);
-                                // System.out.println("media"+media+" distance= "+distance+" m"+" difference x ="+(value2.f3-value1.f3)+" difference y ="+(value2.f4-value1.f4));
-                                //return new Tuple7<>(value1.f0, value1.f1 + 1, time, value1.f2.doubleValue(), value1.f4, distance, media);
+                                }
+                                // id-conteggio-start-x-y-distance-v
+
                                 return new Tuple7<>(value1.f0, value1.f1 + 1, value1.f2, value2.f3, value2.f4, distance, media);
                             }
                         });
@@ -260,6 +254,7 @@ public class Query1 {
 
 
 
+        /** si effettua la media tra i sensori associati a ciascun giocatore */
 
         DataStream<String> query1 = ex.flatMap(new Output())
                 .keyBy(2)
@@ -269,7 +264,6 @@ public class Query1 {
                     public Tuple5<Long, Long, String, Double, Double> reduce(Tuple5<Long, Long, String, Double, Double> value1, Tuple5<Long, Long, String, Double, Double> value2) throws Exception {
                         double avg_speed = 0;
                         double avg_distance = 0;
-                        Date tuple_date = new Date();
                         if (value2 != null) {
                             avg_speed = (value1.f4 + value2.f4) / 2;
                             avg_distance = (value1.f3 + value2.f3) / 2;
@@ -277,7 +271,7 @@ public class Query1 {
                             avg_distance = value1.f3;
                             avg_speed = value1.f4;
                         }
-                        System.out.println("Id= "+ value2.f2+" Tuple Time "+tuple_date.getTime()+" ms");
+                        //System.out.println("Id= "+ value2.f2+" Tuple Time "+tuple_date.getTime()+" ms");
                         Long endWindow = (value1.f0/EndWindow+1)*EndWindow;
 
                         return new Tuple5<>(value1.f0, endWindow, value2.f2, avg_distance, avg_speed);
@@ -296,29 +290,6 @@ public class Query1 {
 
         // execute program
         env.execute("Flink Streaming Java API Skeleton");
-    }
-
-    //questa fuinzione dovrebbe cancellare i dublicati E funziona alla grandeeeeeee!!!!
-    // link di riferimento -> https://stackoverflow.com/questions/35599069/apache-flink-0-10-how-to-get-the-first-occurence-of-a-composite-key-from-an-unbo
-    public static class DuplicateFilter extends RichFlatMapFunction<Tuple5<Long, Long, String, Double, Double>, Tuple5<Long, Long, String, Double, Double>> {
-
-        static final ValueStateDescriptor<Boolean> descriptor = new ValueStateDescriptor<>("seen", Boolean.class, false);
-        private ValueState<Boolean> operatorState;
-
-        @Override
-        public void open(Configuration configuration) {
-            operatorState = this.getRuntimeContext().getState(descriptor);
-        }
-
-        @Override
-        public void flatMap(Tuple5<Long, Long, String, Double, Double> value, Collector<Tuple5<Long, Long, String, Double, Double>> out) throws Exception {
-            if (!operatorState.value()) {
-                // we haven't seen the element yet
-                out.collect(value);
-                // set operator state to true so that we don't emit elements with this key again
-                operatorState.update(true);
-            }
-        }
     }
 
 }

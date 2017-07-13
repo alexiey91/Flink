@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * Created by root on 26/06/17.
  */
 public class StreamingJobRabbit {
-    private final static String QUEUE_NAME = "PIO";
+    private final static String QUEUE_NAME = "CODA";
     private  static final long Start_match = 10753295594424116L;
     private static final long Starting = 10629342490369879L;
 

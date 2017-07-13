@@ -1,25 +1,16 @@
 package main.java.it.valenti.salome.flink;
 
 import main.java.it.valenti.salome.flink.util.PositionField;
-import main.java.it.valenti.salome.flink.util.TupleTreeSet;
-import main.java.it.valenti.salome.flink.util.ZoneMap;
-import main.java.it.valenti.salome.flink.util.ZoneSet;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.ReduceFunction;
-import org.apache.flink.api.common.functions.RichFlatMapFunction;
-import org.apache.flink.api.common.state.ValueState;
-import org.apache.flink.api.common.state.ValueStateDescriptor;
 import org.apache.flink.api.java.functions.KeySelector;
-import org.apache.flink.api.java.tuple.Tuple4;
 import org.apache.flink.api.java.tuple.Tuple5;
 import org.apache.flink.api.java.tuple.Tuple6;
-import org.apache.flink.configuration.Configuration;
 import org.apache.flink.core.fs.FileSystem;
 import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.timestamps.AscendingTimestampExtractor;
-import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.rabbitmq.RMQSource;
 import org.apache.flink.streaming.connectors.rabbitmq.common.RMQConnectionConfig;
@@ -29,18 +20,15 @@ import org.apache.flink.util.Collector;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import static org.apache.flink.shaded.com.google.common.primitives.Longs.min;
 
 
 /**
  * Created by root on 27/06/17.
  */
 public class Query3 {
-    private final static String QUEUE_NAME = "PIO";
+    private final static String QUEUE_NAME = "CODA";
     private final static int DEFAULT_SIZE = 1;
     public static final class LineSplitter implements FlatMapFunction<String,Tuple5<Long, String, String, String,Long>> {
 
@@ -48,13 +36,10 @@ public class Query3 {
 
         @Override
         public void flatMap(String value, Collector<Tuple5<Long, String, String, String,Long>> out) {
-            // normalize and split the line
+            /** normalizza e divide le linee lette dalla sorgente */
             String[] tokens = value.toLowerCase().split(",");
             PositionField positionField = new PositionField();
-            //out--> sid conteggio e Stringa con tutti i campi
-            //double t= Math.floor(Double.parseDouble(tokens[1]));
-            // long l = (long)t;
-            /** qui bisogna convertire le coordinate in zona**/
+
 
             String name="";
             switch (tokens[0]) {
@@ -160,7 +145,7 @@ public class Query3 {
 
             String positionCell=positionField.positionCell(Double.parseDouble(tokens[2]),Double.parseDouble(tokens[3]));
 
-
+            //start,stop,nomegiocatore,cella,tempocampione
             out.collect(new Tuple5<>(Long.parseLong(tokens[1]),"",name,positionCell,5L));
 
         }
@@ -173,7 +158,10 @@ public class Query3 {
 
         @Override
         public void flatMap(Tuple6<Long, String, String, String,String,Long> input, Collector<String> output) throws Exception {
-            String [] token= input.f4.split(Pattern.quote(":"));//zona:value:zona:value:zona:value
+            /**
+             * si splitta zona1:value1:zona2:value2:zona3:value3... per poter calcolare la percentuale di tempo che il giocatore passa in una cella
+             **/
+            String [] token= input.f4.split(Pattern.quote(":"));
             ArrayList<String> zones = new ArrayList<>();
             ArrayList<String> zValue = new ArrayList<>();
             for(int j =0;j<token.length;j++){
@@ -188,8 +176,6 @@ public class Query3 {
             for(int j =0;j<zones.size();j++)
                 list+="("+zones.get(j)+":"+zValue.get(j)+"%)\n";
 
-
-           // Long endWindow = Math.round(( input.f0/ Long.parseLong(input.f1)*60000 )*(60000 +1))*Long.parseLong(input.f1);
             Long endWindow = (input.f0/Long.parseLong(input.f1)+1)*Long.parseLong(input.f1);
             output.collect("> t_start:"+input.f0+",t_end:"+endWindow+",name:"+input.f2+","+list);
         }
@@ -200,15 +186,17 @@ public class Query3 {
 
         @Override
         public void flatMap(Tuple5<Long, String, String, String,Long> input, Collector<Tuple6<Long, String, String, String,String,Long>> output) throws Exception {
+            //start,end,name,zona,zona:tempotrascorso,tempotrascorso
             output.collect(new Tuple6<>(input.f0,input.f1,input.f2,input.f3,input.f3+":"+input.f4,input.f4));
         }
     }
 
     public static void main(final String[] args) throws Exception {
-        // set up the streaming execution environment
+
+        /** configurazione */
+
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-        //env.setParallelism(3);
         int timeWindow= DEFAULT_SIZE;
         if(args.length != 4)
             System.out.println("Usage: .\\bin\\flink run -c main.java.it.valenti.salome.flink.Query3 .\\flink.jar <fileOut,sizeWindow in minutes, parallelism,source(0= flink/1=file)>");
@@ -244,7 +232,9 @@ public class Query3 {
 
         System.out.println("Dopo dataStrem");
 
-        //stream
+        /**
+         * in questa fase si camcola per ogni giocatore il tempo che ha trascorso in ogni cella
+         */
         DataStream<Tuple5<Long, String, String, String,Long>> ex =
                 stream.flatMap(new LineSplitter())            // timestamp-(timestamp)-id-zonaCampo-tempo
                         .assignTimestampsAndWatermarks(new AscendingTimestampExtractor<Tuple5<Long, String, String, String,Long>>() {
@@ -255,9 +245,9 @@ public class Query3 {
                             }
                         })
                         .keyBy(new KeySelector<Tuple5<Long, String, String, String,Long>, String>() {
-                            public String getKey(Tuple5<Long, String, String, String,Long> wc) { return wc.f2+wc.f3; }
+                            //stream -> keyed stream(nome,zona)
+                            public String getKey(Tuple5<Long, String, String, String,Long> keyed) { return keyed.f2+keyed.f3; }
                         })
-                        //.window(TumblingEventTimeWindows.of(Time.minutes(timeWindow)))
                         .timeWindow(Time.minutes(timeWindow))
                         .reduce(new ReduceFunction<Tuple5<Long, String, String, String,Long>>() {
 
@@ -266,15 +256,14 @@ public class Query3 {
                             @Override
                             public Tuple5<Long, String, String, String,Long> reduce(Tuple5<Long, String, String, String,Long> value1, Tuple5<Long, String, String, String,Long> value2)
                                     throws Exception {
-                                // timestamp-timestamp2-id-zonaCampo-tempoIncr
-                                            //timestamp / larghezzaFinestra* (larghezzaFinestra+1) prende l'estremo destro della finestra
-                               // Long endWindow = ( value1.f0/ Long.parseLong(args[1])*60000 )*(60000 +1)*Long.parseLong(args[1]);
-                                //return new Tuple5<>(value1.f0,value2.f1, value1.f2,value1.f3,value1.f4+value2.f4 );
+                                // start,end,nome,zonaCampo,tempo cumulativo della zona di quel giocatore
                                 return new Tuple5<>(value1.f0,value2.f0.toString(), value1.f2,value1.f3,value1.f4+5);
                             }
                         });
-
-         DataStream<String> query = ex
+        /**
+         * per ogni giocatore si calcola la percentuale di tempo trascorso in ogni cella nell'arco della finestra
+         */
+        DataStream<String> query = ex
                  .flatMap(new MidOutput())
                  .keyBy(2)
                  //.window(TumblingEventTimeWindows.of(Time.minutes(timeWindow)))
@@ -287,8 +276,7 @@ public class Query3 {
                      @Override
                      public Tuple6<Long, String, String, String,String,Long> reduce(Tuple6<Long, String, String, String,String,Long> value1, Tuple6<Long, String, String, String,String,Long> value2)
                              throws Exception {
-                                                //start,end,id,zona,zona:tempo:zona:tempo,tempoTot
-                        // return new Tuple6<> (value1.f0,value2.f0.toString(), value1.f2,value1.f3,value1.f4+":"+value2.f4 ,value1.f5 +value2.f5);
+                         //start,larghezzafinestra,name,zona,zona1:tempo1:zona2:tempo2...,tempoTot
                          return new Tuple6<> (value1.f0,""+EndWindow, value1.f2,value1.f3,value1.f4+":"+value2.f4 ,value1.f5 +value2.f5);
 
                      }
