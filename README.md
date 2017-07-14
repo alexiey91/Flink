@@ -84,7 +84,7 @@ dei 5 giocatori piu veloci. L’output della classifica ha il seguente schema:
     . . .
 
     Tali statistiche aggregate dovranno essere calcolate per diverse finestre temporali, in modo tale da
-    permettere di confrontare le prestazioni dei giocatori piu veloci durante lo svolgimento della partita. `
+    permettere di confrontare le prestazioni dei giocatori piu veloci durante lo svolgimento della partita.
     Le finestre temporali richieste hanno durata di:
 
     • 1 minuto;
@@ -130,7 +130,11 @@ delle query ottenute dai due framework.
 # Prerequisiti
 
 Installare il framework Apache Flink e RabbitMq all'interno della propria macchina (disponibili sia per Linux che Windows).
-
+- Modificare il file di configurazione di Flink conf/flink-conf.yml, all'interno della cartella di installazione, impostando i parametri: 
+                
+            taskmanager.numberOfTaskSlot: 3
+            parallelism.default: 3
+            
 - Una volta effettuata tale procedura scaricare il codice sorgente ed utilizzare il comando (all'iterno della directory del progetto):
             
             sudo mvn clean
@@ -139,8 +143,8 @@ Installare il framework Apache Flink e RabbitMq all'interno della propria macchi
 
 - Una volta all'interno della directory di installazione di Flink eseguire: 
             
-           Il demone di RabbitMQ 
-           sudo bin/start-local.sh
+           sudo service rabbitmq-server start   (per far partire il server di RabbitMQ)
+           sudo bin/start-local.sh              (per far partire il server di Flink)
            
 # Configurazione Flink con RabbitMQ
 
